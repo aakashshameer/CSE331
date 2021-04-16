@@ -12,7 +12,7 @@
 package setup;
 
 import java.lang.Iterable;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * This is a container can be used to contain Balls. The key
@@ -24,7 +24,10 @@ public class Box implements Iterable<Ball> {
     /**
      * ballContainer is used to internally store balls for this Box
      */
-    private BallContainer ballContainer;
+    private final BallContainer ballContainer;
+    private final double maxVolume;
+
+
 
     /**
      * Constructor that creates a new box.
@@ -33,7 +36,9 @@ public class Box implements Iterable<Ball> {
      */
     public Box(double maxVolume) {
         // Your code goes here.  Remove the exception after you're done.
-        throw new RuntimeException("Method not implemented");
+        //throw new RuntimeException("Method not implemented");
+        ballContainer = new BallContainer();
+        this.maxVolume = maxVolume;
     }
 
     /**
@@ -65,7 +70,12 @@ public class Box implements Iterable<Ball> {
      */
     public boolean add(Ball b) {
         // Your code goes here.  Remove the exception after you're done.
-        throw new RuntimeException("Method not implemented");
+        //throw new RuntimeException("Method not implemented");
+        if(ballContainer.getVolume() + b.getVolume() <= maxVolume && !ballContainer.contains(b)){
+            ballContainer.add(b);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -78,7 +88,45 @@ public class Box implements Iterable<Ball> {
      */
     public Iterator<Ball> getBallsFromSmallest() {
         // Your code goes here.  Remove the exception after you're done.
-        throw new RuntimeException("Method not implemented");
+        //throw new RuntimeException("Method not implemented");
+        return new getBallsFromSmallestIterator();
+    }
+
+    private class getBallsFromSmallestIterator implements Iterator<Ball>{
+        private ArrayList<Ball> balls;
+        private int size;
+        private int index;
+
+        public getBallsFromSmallestIterator() {
+            index = 0;
+            balls = new ArrayList<Ball>();
+            size = 0;
+            for(Ball b : ballContainer) {
+                balls.add(b);
+                size++;
+            }
+            Collections.sort(balls, new ballComparator());
+        }
+
+        public boolean hasNext() {
+            return index != size - 1;
+        }
+
+        @Override
+        public Ball next() {
+            Ball b = balls.remove(0);
+            index++;
+            size--;
+            return b;
+
+        }
+    }
+
+    private class ballComparator implements Comparator<Ball> {
+        public int compare (Ball a, Ball b){
+            return Double.compare(a.getVolume(), b.getVolume());
+        }
+
     }
 
     /**
