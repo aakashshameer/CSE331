@@ -3,16 +3,22 @@
 
 1. Why did Fibonacci fail the testThrowsIllegalArgumentException< test? What (if anything) did
 you have to do to fix it? If you did not have to change anything to fix this issue, explain why.
+- The if statement was wrong. The exception was initially thrown when n is equal of lesser than 0. Therefore, I
+changed the if condition to i < 0 so that the exception is thrown only if n is less than 0.
 
 
 
 2. Why did Fibonacci fail the testBaseCase test? What (if anything) did you have to do to fix
 it? If you did not have to change anything to fix this issue, explain why.
+- The else if statement was wrong. Firstly, the condition should have been n <= 1 instead of n <= 2 because that
+is how fibonacci work. I also changed it to an if statement instead of an else-if for good structure. Based on my
+java understanding, we shouldn't continue to extend an else-if statement after an if statement that throws an exception.
 
 
 
 3.Why did Fibonacci fail the testInductiveCase test? What (if anything) did you have to do to
 fix it? If you did not have to change anything to fix this issue, explain why.
-
+- The inductive cases were failing because the returning the getFibTerm(n-1) - getFibTerm(n-2) was wrong. We should
+instead return the getFibTerm(n-1) + getFibTerm(n-2) because Fibonacci to recursively add the fibonacci number.
 
 
