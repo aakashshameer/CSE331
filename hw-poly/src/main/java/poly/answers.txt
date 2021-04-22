@@ -3,14 +3,67 @@
 ###########################################################################
 
 1. Multiplication Pseudocode
+r = p * q;
+	set r = q by making a term-by-term copy of all terms in q to r
+	{Inv : r = q * p_0 * p_1 * … * p_i-1 where p_j is the jth term in p }
+	Foreach term, t_p in p:
+		For each term, t_q in q;
+			//If t_q and t_p have the same degree:
+			replace t_r in r with the product of t_p and t_r with adding the exponent.
 
 
 
 2. Division Pseudocode
+let d_p be the degree in term p and d_q be the degree in term q
+    set r = p by making a term-by-term copy of all terms in p to r.
+    {inv: }
+    while the highest degree of remainder r, is higher than or equals to the highest degree of divisor q
+        RatTerm deg = d_p / d_q
+        RatPoly result += deg
+        RatPoly poly = deg * q
+        RatPoly newDividend = r - poly
+        replace r(RatPoly) with the newDividend
+    return result
 
 
 
 3. Division Example: (x3+x-1) / (x+1) = x2-x+2
+p = x^3 + x - 1
+q = x+1
+r = copy of p = x^3 + x - 1
+int result = 0
+while the highest degree of dividend r, is higher than or equals to the highest degreee of divisor q
+Iteration 1: YES, x^3 >= x (3 >= x)
+    [int deg = d_p / d_q] x^3 / x = x^2
+    [int result += deg] x^2
+    [int poly = deg * q] x^2 * (x+1) = x^3 + x^2
+    [int newDividend = r - poly] (x^3 + x - 1) - (x^3 + x^2) = -x^2 + x - 1
+    replace r with the newDividend r = -x^2 + x - 1
+
+r = -x^2 + x - 1
+int result = x^2
+while the highest degree of dividend r, is higher than or equals to the highest degreee of divisor q
+Iteration 2: YES, x^2 >= x (2 >= x)
+    [int deg = d_p / d_q] -x^2 / x = -x
+    [int result += deg] x^2 - x
+    [int poly = deg * q] -x * (x+1) = -x^2 - x
+    [int newDividend = r - poly] (-x^2 + x - 1) - (-x^2 - x) = 2x - 1
+    replace r with the newDividend r = 2x - 1
+
+r = 2x - 1
+while the highest degree of dividend r, is higher than or equals to the highest degreee of divisor q
+Iteration 3: YES, 2x >= x (1 >= 1)
+    [int deg = d_p / d_q] 2x / x = 2
+    [int result += deg] x^2 - x + 2
+    [int poly = deg * q] 2 * (x+1) = 2x + 2
+    [int newDividend = r - poly] (2x - 1) - (2x + 2) = -3
+    replace r with the newDividend r = -3
+
+r = -3
+while the highest degree of dividend r, is higher than or equals to the highest degreee of divisor q
+Iteration 4: NO, -3 < x (0 < 1)
+
+[return result] x^2 - x + 2
 
 
 
@@ -19,34 +72,64 @@
 ###########################################################################
 
 1. Weakened Rep Invariant
+Methods that will change:
+- 2nd RatNum Constructor: Since our n and d does not have to be in reduced form, we could emit the gcd calculation in our else statement. This will
+   reduce the efficiency of our program because we will end up with rational numbers that aren't in reduced form.
+
+- toString(): Since our n and d does not have to be in reduced form but the toString spec says that we need to output a rational number in
+  reduced terms, therefore, we need to have some sort of simplification that ensures that our numer and denom is in reduced form. This will reduce
+  the efficiency a little bit because it will take us a little more time to simplify our numbers.
+
+- equals(): Based on our new rep invariant, our n and d does not have to be in reduced form, therefore, in our equals method, we need to ensure that
+  'this' and 'obj' is in its simplest form before comparing with each other.
 
 
 
 2. Alternate add, sub, mul, div
 
+- With our new implementation, instead of returning the new object, we instead modify our current numer and denom and return 'this'. This, however,
+  is not align with our RatNum class because the class is declared as 'immutable'. Hence, changing it will cause the class to fail to meet
+  its specifications.
 
 
 3. Constructor checkReps
-
-
+- In most cases, we would need to check the representation invariant at the beginning and ending of every method. However, we only need to check the
+  rep invariant in the constructors in the case of RatNum because it is an immutable class which the constructor is the only place where
+  RatNum could be modified. Therefore, with our numer and denom fields being final, RatNum cannot be modified in any other methods which means that
+  we do not need to check the rep invariant.
 
 
 ## Part 2
 ###########################################################################
 
 1. Calls to checkRep in RatTerm
-
+- We would only need to include checkRep in the end of the constructor. This is because RatTerm is also an immutable class which means that
+  it wouldn't be modified anywhere else other than the constructor. Therefore, we only need to include checkRep() in the end of the constructor
+  to ensure that our rep invariant passes.
 
 
 2. Weakened Rep Invariant
+- RatTerm constructor(): This will change because we wouldn't have our exponent to be 0 if our coefficient is 0. This would reduce our efficiency
+  we would end up with many bogus zero coefficients with non-zero exponents which will delay our calculation.
 
+- toString(): Based on our new rep invariant, we now need to check if our coefficient is 0. Previously, if our coefficient is 0, our exponent is
+  automatically zero, however, with this new rep invariant, if our coefficient is 0, our exponent might not be 0. Therefore, we now need to output
+  a 0 if our coefficient is 0 to adhere to the specfications. In terms of code clarity, I believe that it will be a little clearer because
+  we are checking extra cases that weren't checked previously.
+
+- equals(): Based on our rep invariant, there are some new cases we have to take into account that our prev code did not handle.
+Despite the exponent being different, if our coefficients are the same, we should then regard 'this' and 'obj' to be the same. This will reduce
+the efficiency because we have to take care of another case due to our new rep invariant.
 
 
 3. Alternate Rep Invariant
+- RatTerm constructor(): This will change because we now need to check if our coefficient is NaN, then we have to set of exponent to 0, according
+  to the alternate rep invariant.
 
 
-
-4. Preferred Invariants
+4. Preferred Invariants:
+- I prefer to use coeff.equals(RatNum.ZERO) ⇒ expt = 0 because I believe this makes our program more efficient. In other words, when our coefficient is 0,
+  we automatically know that our exponent is 0. Therefore, there are less cases for us to check.
 
 
 

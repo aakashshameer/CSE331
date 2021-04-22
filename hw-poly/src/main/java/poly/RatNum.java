@@ -83,6 +83,7 @@ public final class RatNum extends Number implements Comparable<RatNum> {
      * @param d the denominator of the new RatNum
      * @spec.effects If d = 0, constructs a new RatNum = NaN. Else constructs a new RatNum = (n / d).
      */
+    //n= 6, d = 9 | n = 2, d = 3
     public RatNum(int n, int d) {
         // special case for zero denominator; gcd(n,d) requires d != 0
         if(d == 0) {

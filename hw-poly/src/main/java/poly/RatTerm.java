@@ -72,9 +72,15 @@ public final class RatTerm {
      * @spec.effects Constructs a new RatTerm t, with t.coeff = c, and if c.equals(RatNum.ZERO), then
      * t.expt = 0, otherwise t.expt = e
      */
-    public RatTerm(RatNum c, int e) {
-        // TODO: Fill in this method, then remove the RuntimeException
-        throw new RuntimeException("RatTerm.constructor is not yet implemented");
+    public RatTerm(RatNum c, int e){
+        if(c.equals(RatNum.ZERO)){
+            this.expt = 0;
+        } else {
+            this.expt = e;
+        }
+        this.coeff = c;
+
+        checkRep();
     }
 
     /**
@@ -83,8 +89,7 @@ public final class RatTerm {
      * @return the coefficient of this RatTerm
      */
     public RatNum getCoeff() {
-        // TODO: Fill in this method, then remove the RuntimeException
-        throw new RuntimeException("RatTerm.getCoeff() is not yet implemented");
+        return coeff;
     }
 
     /**
@@ -93,8 +98,7 @@ public final class RatTerm {
      * @return the exponent of this RatTerm
      */
     public int getExpt() {
-        // TODO: Fill in this method, then remove the RuntimeException
-        throw new RuntimeException("RatTerm.getExpt() is not yet implemented");
+        return expt;
     }
 
     /**
@@ -103,8 +107,7 @@ public final class RatTerm {
      * @return true if and only if this has NaN as a coefficient
      */
     public boolean isNaN() {
-        // TODO: Fill in this method, then remove the RuntimeException
-        throw new RuntimeException("RatTerm.isNaN() is not yet implemented");
+        return coeff.isNaN();
     }
 
     /**
@@ -113,8 +116,7 @@ public final class RatTerm {
      * @return true if and only if this has zero as a coefficient
      */
     public boolean isZero() {
-        // TODO: Fill in this method, then remove the RuntimeException
-        throw new RuntimeException("RatTerm.isZero() is not yet implemented");
+        return coeff.compareTo(RatNum.ZERO) == 0 ;
     }
 
     /**
@@ -127,7 +129,11 @@ public final class RatTerm {
     public double eval(double d) {
         // TODO: Fill in this method, then remove the RuntimeException
         // Hint: You may find java.lang.Math's pow() method useful.
-        throw new RuntimeException("RatTerm.eval() is not yet implemented");
+        //throw new RuntimeException("RatTerm.eval() is not yet implemented");
+        if (this.isNaN()){
+            return Double.NaN;
+        }
+        return coeff.doubleValue() * Math.pow(d, expt);
     }
 
     /**
@@ -137,7 +143,11 @@ public final class RatTerm {
      */
     public RatTerm negate() {
         // TODO: Fill in this method, then remove the RuntimeException
-        throw new RuntimeException("RatTerm.negate() is not yet implemented");
+        //throw new RuntimeException("RatTerm.negate() is not yet implemented");
+        if(coeff.isNaN()){
+            return RatTerm.NaN;
+        }
+        return new RatTerm(coeff.negate(),expt);
     }
 
     /**
@@ -149,9 +159,22 @@ public final class RatTerm {
      *                                  NaN.
      * @spec.requires arg != null
      */
-    public RatTerm add(RatTerm arg) {
+    //change
+    public RatTerm add(RatTerm arg) throws IllegalArgumentException {
         // TODO: Fill in this method, then remove the RuntimeException
-        throw new RuntimeException("RatTerm.add() is not yet implemented");
+        //throw new RuntimeException("RatTerm.add() is not yet implemented");
+
+        if(expt != arg.expt && !(this.isNaN() || this.isZero()) && !(arg.isNaN() || arg.isZero())){
+            throw new IllegalArgumentException();
+        } else if(arg.isNaN() || this.isNaN()){
+            return RatTerm.NaN;
+        } else if (this.isZero() && !arg.isZero()){
+            return arg;
+        } else if(arg.isZero() && !this.isZero()){
+            return new RatTerm(coeff, expt);
+        } else {
+            return new RatTerm(coeff.add(arg.coeff), expt);
+        }
     }
 
     /**
@@ -163,9 +186,13 @@ public final class RatTerm {
      *                                  NaN.
      * @spec.requires arg != null
      */
-    public RatTerm sub(RatTerm arg) {
+    //change
+    public RatTerm sub(RatTerm arg) throws IllegalArgumentException {
         // TODO: Fill in this method, then remove the RuntimeException
-        throw new RuntimeException("RatTerm.sub() is not yet implemented");
+        //throw new RuntimeException("RatTerm.sub() is not yet implemented");
+
+        return this.add(arg.negate());
+
     }
 
     /**
@@ -177,7 +204,12 @@ public final class RatTerm {
      */
     public RatTerm mul(RatTerm arg) {
         // TODO: Fill in this method, then remove the RuntimeException
-        throw new RuntimeException("RatTerm.mul() is not yet implemented");
+        //throw new RuntimeException("RatTerm.mul() is not yet implemented");
+        if(arg.isNaN() || this.isNaN()){
+            return RatTerm.NaN;
+        }
+
+        return new RatTerm(coeff.mul(arg.coeff), expt + arg.expt);
     }
 
     /**
@@ -190,7 +222,12 @@ public final class RatTerm {
      */
     public RatTerm div(RatTerm arg) {
         // TODO: Fill in this method, then remove the RuntimeException
-        throw new RuntimeException("RatTerm.div() is not yet implemented");
+        //throw new RuntimeException("RatTerm.div() is not yet implemented");
+        if(arg.isZero()|| arg.isNaN() || this.isNaN()){
+            return RatTerm.NaN;
+        }
+
+        return new RatTerm(coeff.div(arg.coeff), expt - arg.expt);
     }
 
     /**
@@ -204,7 +241,14 @@ public final class RatTerm {
      */
     public RatTerm differentiate() {
         // TODO: Fill in this method, then remove the RuntimeException
-        throw new RuntimeException("RatTerm.differentiate() is not yet implemented");
+        //throw new RuntimeException("RatTerm.differentiate() is not yet implemented");
+        if(this.isNaN()){
+            return RatTerm.NaN;
+        } else if(expt > 0){
+            return new RatTerm(coeff.mul(new RatNum(expt)), expt -1 );
+        } else {
+            return ZERO;
+        }
     }
 
     /**
@@ -219,7 +263,13 @@ public final class RatTerm {
      */
     public RatTerm antiDifferentiate() {
         // TODO: Fill in this method, then remove the RuntimeException
-        throw new RuntimeException("RatTerm.antiDifferentiate() unimplemented!");
+        //throw new RuntimeException("RatTerm.antiDifferentiate() unimplemented!");
+
+        if(this.isNaN()){
+            return RatTerm.NaN;
+        } else {
+            return new RatTerm(coeff.div(new RatNum(expt+1)), expt +1 );
+        }
     }
 
     /**
@@ -256,7 +306,7 @@ public final class RatTerm {
             output.append("x^" + e);
         } else if(e == 1) {
             output.append(c.toString() + "*x");
-        } else {
+        } else { // e!= 0, 1 and c != 1
             output.append(c.toString() + "*x^" + e);
         }
         return output.toString();
@@ -348,6 +398,7 @@ public final class RatTerm {
      * @return true iff 'obj' is an instance of a RatTerm and 'this' and 'obj' represent the same
      * RatTerm. Note that all NaN RatTerms are equal.
      */
+    //0x^2 and 0x^3
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof RatTerm) {
