@@ -142,8 +142,6 @@ public final class RatTerm {
      * @return a RatTerm equals to (-this). If this is NaN, then returns NaN.
      */
     public RatTerm negate() {
-        // TODO: Fill in this method, then remove the RuntimeException
-        //throw new RuntimeException("RatTerm.negate() is not yet implemented");
         if(coeff.isNaN()){
             return RatTerm.NaN;
         }
@@ -159,10 +157,8 @@ public final class RatTerm {
      *                                  NaN.
      * @spec.requires arg != null
      */
-    //change
     public RatTerm add(RatTerm arg) throws IllegalArgumentException {
-        // TODO: Fill in this method, then remove the RuntimeException
-        //throw new RuntimeException("RatTerm.add() is not yet implemented");
+
 
         if(expt != arg.expt && !(this.isNaN() || this.isZero()) && !(arg.isNaN() || arg.isZero())){
             throw new IllegalArgumentException();
@@ -186,10 +182,7 @@ public final class RatTerm {
      *                                  NaN.
      * @spec.requires arg != null
      */
-    //change
     public RatTerm sub(RatTerm arg) throws IllegalArgumentException {
-        // TODO: Fill in this method, then remove the RuntimeException
-        //throw new RuntimeException("RatTerm.sub() is not yet implemented");
 
         return this.add(arg.negate());
 
@@ -203,8 +196,6 @@ public final class RatTerm {
      * @spec.requires arg != null
      */
     public RatTerm mul(RatTerm arg) {
-        // TODO: Fill in this method, then remove the RuntimeException
-        //throw new RuntimeException("RatTerm.mul() is not yet implemented");
         if(arg.isNaN() || this.isNaN()){
             return RatTerm.NaN;
         }
@@ -221,8 +212,6 @@ public final class RatTerm {
      * @spec.requires arg != null
      */
     public RatTerm div(RatTerm arg) {
-        // TODO: Fill in this method, then remove the RuntimeException
-        //throw new RuntimeException("RatTerm.div() is not yet implemented");
         if(arg.isZero()|| arg.isNaN() || this.isNaN()){
             return RatTerm.NaN;
         }
@@ -240,8 +229,6 @@ public final class RatTerm {
      * RatPoly, contains a rep. invariant stating that b is never less than 0.)
      */
     public RatTerm differentiate() {
-        // TODO: Fill in this method, then remove the RuntimeException
-        //throw new RuntimeException("RatTerm.differentiate() is not yet implemented");
         if(this.isNaN()){
             return RatTerm.NaN;
         } else if(expt > 0){
@@ -262,8 +249,6 @@ public final class RatTerm {
      * function, RatPoly, contains a rep. invariant stating that b is never less than 0.)
      */
     public RatTerm antiDifferentiate() {
-        // TODO: Fill in this method, then remove the RuntimeException
-        //throw new RuntimeException("RatTerm.antiDifferentiate() unimplemented!");
 
         if(this.isNaN()){
             return RatTerm.NaN;

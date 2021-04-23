@@ -1,5 +1,7 @@
 ## CSE 331 hw-poly Questions
 ## Part 0 - Aakash Shameer
+
+I discussed this project with Ghislaine Ng but we didn't view each others code.
 ###########################################################################
 
 1. Multiplication Pseudocode
