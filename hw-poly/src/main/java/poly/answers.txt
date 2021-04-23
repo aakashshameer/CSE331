@@ -16,7 +16,7 @@ r = p * q;
 2. Division Pseudocode
 let d_p be the degree in term p and d_q be the degree in term q
     set r = p by making a term-by-term copy of all terms in p to r.
-    {inv: }
+    {Inv: p = q * r + k at each step}
     while the highest degree of remainder r, is higher than or equals to the highest degree of divisor q
         RatTerm deg = d_p / d_q
         RatPoly result += deg
