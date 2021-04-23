@@ -1,5 +1,5 @@
 ## CSE 331 hw-poly Questions
-## Part 0
+## Part 0 - Aakash Shameer
 ###########################################################################
 
 1. Multiplication Pseudocode
