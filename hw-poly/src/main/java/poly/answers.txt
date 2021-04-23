@@ -34,29 +34,29 @@ r = copy of p = x^3 + x - 1
 int result = 0
 while the highest degree of dividend r, is higher than or equals to the highest degreee of divisor q
 Iteration 1: YES, x^3 >= x (3 >= x)
-    [int deg = d_p / d_q] x^3 / x = x^2
-    [int result += deg] x^2
-    [int poly = deg * q] x^2 * (x+1) = x^3 + x^2
-    [int newDividend = r - poly] (x^3 + x - 1) - (x^3 + x^2) = -x^2 + x - 1
+    [RatTerm deg = d_p / d_q] x^3 / x = x^2
+    [RatPoly result += deg] x^2
+    [RatPoly poly = deg * q] x^2 * (x+1) = x^3 + x^2
+    [RatPoly newDividend = r - poly] (x^3 + x - 1) - (x^3 + x^2) = -x^2 + x - 1
     replace r with the newDividend r = -x^2 + x - 1
 
 r = -x^2 + x - 1
 int result = x^2
 while the highest degree of dividend r, is higher than or equals to the highest degreee of divisor q
 Iteration 2: YES, x^2 >= x (2 >= x)
-    [int deg = d_p / d_q] -x^2 / x = -x
-    [int result += deg] x^2 - x
-    [int poly = deg * q] -x * (x+1) = -x^2 - x
-    [int newDividend = r - poly] (-x^2 + x - 1) - (-x^2 - x) = 2x - 1
+    [RatTerm deg = d_p / d_q] -x^2 / x = -x
+    [RatPoly result += deg] x^2 - x
+    [RatPoly poly = deg * q] -x * (x+1) = -x^2 - x
+    [RatPoly newDividend = r - poly] (-x^2 + x - 1) - (-x^2 - x) = 2x - 1
     replace r with the newDividend r = 2x - 1
 
 r = 2x - 1
 while the highest degree of dividend r, is higher than or equals to the highest degreee of divisor q
 Iteration 3: YES, 2x >= x (1 >= 1)
-    [int deg = d_p / d_q] 2x / x = 2
-    [int result += deg] x^2 - x + 2
-    [int poly = deg * q] 2 * (x+1) = 2x + 2
-    [int newDividend = r - poly] (2x - 1) - (2x + 2) = -3
+    [RatTerm deg = d_p / d_q] 2x / x = 2
+    [RatPoly  result += deg] x^2 - x + 2
+    [RatPoly poly = deg * q] 2 * (x+1) = 2x + 2
+    [RatPoly newDividend = r - poly] (2x - 1) - (2x + 2) = -3
     replace r with the newDividend r = -3
 
 r = -3
