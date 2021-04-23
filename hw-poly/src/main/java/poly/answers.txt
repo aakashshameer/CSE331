@@ -5,10 +5,10 @@
 1. Multiplication Pseudocode
 r = p * q;
 	set r = q by making a term-by-term copy of all terms in q to r
-	{Inv : r = q * p_0 * p_1 * … * p_i-1 where p_j is the jth term in p }
+	{Inv : r = q * p_0 + q * p_1 +  … + q * p_i-1 where p_j is the jth term in p }
 	Foreach term, t_p in p:
 		For each term, t_q in q;
-			//If t_q and t_p have the same degree:
+			If t_q and t_p have the same degree:
 			replace t_r in r with the product of t_p and t_r with adding the exponent.
 
 
@@ -138,10 +138,17 @@ the efficiency because we have to take care of another case due to our new rep i
 ###########################################################################
 
 1. Calls to checkRep in RatPoly
-
+I only include calls to checkRep in the constructor. This is because RatPoly is a immutable class which means that it isn't modified
+in the methods and it can only be modified in the constructor.
 
 
 2. Alternate Representation
+ Some of the disadvantages is that the calculation will be harder and more complicated. This is because we might slip up the index, i, and might
+ get the wrong exponent with the wrong coefficient causing a disaster to debug. The advantages is I think it that it will be faster because
+ we don't have to access getExpt() and getCoeff() methods in RatTerm every time.
+
+
+However, I still prefer having a RatTerm as a field because it is much easier and I believe that it is a much more professional way of coding.
 
 
 
