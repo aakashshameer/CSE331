@@ -8,54 +8,88 @@
     ### IntQueue1
 
     Abstraction Function:
-
+        IntQueue1 represents a queue of integers as a linked list such that:
+        queue = [] = entries (if there are no element in entries)
+        queue = [i_1, i_2,... , i_k] = entries (otherwise)
+            where k is the number of element in entries.
 
 
     Representation Invariant:
+        entries != null
 
+        In other words,
+        entries always point to some Integer and it has no nulls.
 
 
 
     ### IntQueue2
 
     Abstraction Function:
+        IntQueue2 represents a queue of integers as a linked list such that:
+        entries = [k_1, k_2, ..., k_n], front = i, size = n
+        queue = [] if size = 0
+        queue = [k_(i+1), k_(i+2), ......, k_(i+n)] if front + size <= entries.length
+        queue = [k_(i+1), k_(k), k_(1), ......, k_(k-i)] if front + size > entries.length
 
 
 
     Representation Invariant:
+        entries != null
+        size >= 0,
+        front >= 0,
+        front <= entries.length - 1
 
 
 
 
 2. Group the snapshots of IntQueue2's internal state into groups that have the same abstract state.
 
+a = [1,2]
+b = [2,3,4]
+c = [1,2,3]
+d = [1,2]
+e = [1,2,3,4]
+f = [1,2,3]
+g = [1,2]
+h = [2,3,4]
 
-
+From the above queues, we can conclude that:
+ a = d = g
+ b = h
+ c = f
 
 3. For each signature below, state and justify in 1-2 sentences (per part) whether the method or constructor
 could possibly expose the representation, given the information available. Explain any assumptions you made.
 
     a. `public int solveEquations(int x, int y, int z)`
-
+        this method solveEquations() would probably not expose the representation because we are only passing and returning
+        primitive data types and not mutable objects.
 
 
     b. `public String[] decode(boolean slowly)`
-
+        this method decode() might expose the representation because it is returning a String[] which is a mutable object.
 
 
     c. `private Date myBirthday()`
-
+        this method might or might not expose the representation. It is based on the 'Date' object. If it is mutable,
+        and the Date object returned is new, then this method could expose the representation.
 
 
     d. `public String toString()`
-
+        this method toString() would probably not expose the representation because we are only returning a String,
+        which is immutable.
 
 
     e. `public Iterator<Integer> elements()`
+        this method elements() might expose the representation, because it depends on the Iterator<Integer>. If the
+        Iterator<> allow us to iterate and remove the original collection, then it might expose the representation
+        because the client might tweak our collection.
 
 
 
     f. `public Deck(List<Card> cards)`
+        this constructor might expose the representation because if it does not copy the cards passed in because the
+        client is able to change it after.
 
 
 

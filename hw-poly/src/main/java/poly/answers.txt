@@ -32,7 +32,7 @@ let d_p be the degree in term p and d_q be the degree in term q
 3. Division Example: (x3+x-1) / (x+1) = x2-x+2
 p = x^3 + x - 1
 q = x+1
-r = copy of p = x^3 + x - 1
+r = x^3 + x - 1
 int result = 0
 while the highest degree of dividend r, is higher than or equals to the highest degreee of divisor q
 Iteration 1: YES, x^3 >= x (3 >= x)
@@ -44,8 +44,8 @@ Iteration 1: YES, x^3 >= x (3 >= x)
 
 r = -x^2 + x - 1
 int result = x^2
-while the highest degree of dividend r, is higher than or equals to the highest degreee of divisor q
-Iteration 2: YES, x^2 >= x (2 >= x)
+while the highest degree of dividend r, is higher than or equals to the highest degree of divisor q
+Iteration 2: YES, x <= x^2 (2 >= x)
     [RatTerm deg = d_p / d_q] -x^2 / x = -x
     [RatPoly result += deg] x^2 - x
     [RatPoly poly = deg * q] -x * (x+1) = -x^2 - x
@@ -84,6 +84,9 @@ Methods that will change:
 
 - equals(): Based on our new rep invariant, our n and d does not have to be in reduced form, therefore, in our equals method, we need to ensure that
   'this' and 'obj' is in its simplest form before comparing with each other.
+
+- hashCode(): Based on our new rep invariant, we are calculating the multiples of numer and denom. Thus, we have to
+ calculate the multiples of numer and denom in their simplest form instead.
 
 
 
