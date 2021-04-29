@@ -102,14 +102,19 @@ interface to a graph. If your design includes multiple classes or interfaces, ex
 included each one; if not, explain whether you considered additional classes and why you decided
 not to include them.
 
-(change this)
-addNode and addEdge are needed in order to build the graph. containsNode
-are needed so that the graph won't have duplicate nodes. getNodes,
-childrenOf, isEmpty and size are included since it allows client to get
-some information about the graph. entrySet and toString are included since
-I feel that it'll be useful for the client to view the whole graph.
-Finally, removeEdge are included since I think some client might want to
-remove some edges after they are added.
+addNode() - adds node to the graph if it isn't already present.
+removeNode() - removes node from the graph if it is present.
+addEdge() - adds an edge from two nodes.
+removeEdge() - removes an edge from two nodes.
+pointingTo() - returns a Set of nodes that the parent node is pointing to.
+containsNode() - determine if the node is in the graph.
+containsEdge() - determine if the edge is in the graph.
+getNodes() - returns all nodes from the graph.
+getSize() - determine the number of nodes in the graph.
+isEmpty() - determine whether the graph is empty or not.
+edgesFromNodeOutgoing() - returns a set of outgoing edges from the passed node.
+edgesToNodeIncoming() - returns a set of incoming edges from the passed node.
+
 
 
 

@@ -1,0 +1,13 @@
+#Test to create a node in the graph
+
+#Create a graph
+create graph graphName
+
+#Add a node
+added node a to graphName
+
+#Print nodes in the graph
+graphName contains: a
+
+#Print outgoing edges from a
+the children of a in graphName are:

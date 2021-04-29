@@ -26,12 +26,12 @@ public class DirectedGraph {
     * @spec.modifies this
     * @spec.effects add new node to this if it isn't already present
      */
-    private boolean addNode (String node) {
+    public boolean addNode (String node) {
         throw new RuntimeException("Not yet implemented");
     }
 
      /**
-      * removedNode method that removes node from the graph
+      * removedNode method that removes node from the graph if it is present
       *
       * @param node node to remove from the graph
       * @return true if the node is succesfully removed and false otherwise
@@ -39,7 +39,7 @@ public class DirectedGraph {
       * @spec.modifies this.node
       * @spec.effects remove node from this.node if it is already present on the graph
       */
-    private boolean removeNode (String node){
+     public boolean removeNode (String node){
         throw new RuntimeException("Not yet implemented");
     }
 
@@ -55,7 +55,7 @@ public class DirectedGraph {
       * @spec.modifies this.edge
       * @spec.effects add edge from origin to dest to the graph if the edge didn't already exist
       */
-    private boolean addEdge (String origin, String dest, String label){
+     public boolean addEdge (String origin, String dest, String label){
         throw new RuntimeException("Not yet implemented");
     }
 
@@ -70,10 +70,9 @@ public class DirectedGraph {
      * @spec.modifies this.edge
      * @spec.effects remove an edge from origin to dest to the graph if the edge already exist
      */
-    private String removeEdge (String origin, String dest){
+    public String removeEdge (String origin, String dest){
         throw new RuntimeException("Not yet implemented");
     }
-
 
 
     /**
@@ -84,7 +83,7 @@ public class DirectedGraph {
      * @return a set of nodes that the parent node is pointing to
      * @spec.requires node != null
      */
-    private Set<String> pointingTo (String node){
+    public Set<String> pointingTo (String node){
         throw new RuntimeException("Not yet implemented");
     }
 
@@ -92,33 +91,44 @@ public class DirectedGraph {
      /**
       * methods that determine if the node is in the graph
       *
-      * @param node the node that we are trying to find
+      * @param node the node that we are trying to locate
       * @return true if the node is in our nodes and false otherwise
       * @spec.requires node != null
       */
-    private boolean containsNode (String node) {
+     public boolean containsNode (String node) {
         throw new RuntimeException("Not yet implemented");
     }
 
-    //containsEdge
+    /**
+     * methods that determine if the edge is in the graph
+     *
+     * @param edge the edge that we are trying to locate
+     * @return true if the edge is in our nodes and false otherwise
+     * @spec.requires edge != null
+     */
+    public boolean containsEdge (String edge) {
+        throw new RuntimeException("Not yet implemented");
+    }
+
+
 
      /**
-      * returns a set of nodes from the graph
+      * getNodes method that returns all nodes from the graph
       *
-      * @return a Set of Strings that represents specific nodes in the graph
+      * @return a Set of Strings that represents all nodes in the graph
       */
-    private Set<String> getNodes () {
+     public Set<String> getNodes () {
         throw new RuntimeException("Not yet implemented");
     }
 
 
 
      /**
-      * returns the number of nodes in the graph
+      * method to determine the number of nodes in the graph
       *
       * @return an int that represents the number of nodes in the graph
       */
-    private int getSize() {
+     public int getSize() {
         throw new RuntimeException("Not yet implemented");
     }
 
@@ -133,6 +143,7 @@ public class DirectedGraph {
 
     /**
      * method that returns a set of outgoing edges from the passed node
+     *
      * @param node node that we want to find the edges going out from it
      * @return the Set of Strings of outgoing edges from the node
      */
@@ -142,19 +153,12 @@ public class DirectedGraph {
 
 
     /**
-     * method that returns a set of outgoing edges from the passed node
+     * method that returns a set of incoming edges from the passed node
      *
-     * @param node node that we want to find the edges going out from it
-     * @return the Set of Strings of outgoing edges from the node
+     * @param node node that we want to find the edges going into it
+     * @return the Set of Strings of incoming edges from the node
      */
-    public Set<String> edgesFromNodesIncoming (String node){
-        throw new RuntimeException("Not yet implemented");
-    }
-
-    /**
-     * method that checks representation
-     */
-    private void checkRep(){
+    public Set<String> edgesToNodesIncoming (String node){
         throw new RuntimeException("Not yet implemented");
     }
 

@@ -1,0 +1,16 @@
+#Test to create a node and an edge to itself in graph
+
+#Create a graph
+create graph graphName
+
+#Add a node
+added node a to graphName
+
+#Add an edge
+added edge AA from a to a in graphName
+
+#Print nodes in the graph
+graphName contains: a
+
+#Print outgoing edges from a
+the children of a in graphName are: a(AA)

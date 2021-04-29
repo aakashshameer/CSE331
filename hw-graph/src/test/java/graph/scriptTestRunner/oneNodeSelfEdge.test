@@ -1,0 +1,16 @@
+#Test to create a node and an edge to itself in graph
+
+#Create a graph
+CreateGraph graphName
+
+#Add a node
+AddNode graphName a
+
+#Add an edge
+AddEdge graphName a a AA
+
+#Print nodes in the graph
+ListNodes graphName
+
+#Print outgoing edges from a
+ListChildren graphName a
