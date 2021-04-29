@@ -1,0 +1,23 @@
+#Test to create two nodes, with multiple edges in the graph
+
+#Create a graph
+CreateGraph graphName
+
+#Add a node
+AddNode graphName b
+AddNode graphName c
+
+#Add four edges
+AddEdge graphName b b BB
+AddEdge graphName b c BC
+AddEdge graphName b c BC2
+AddEdge graphName c b CB
+
+#Print nodes in the graph
+ListNode graphName
+
+#Print outgoing edges from b
+ListChildren graphName b
+
+#Print outgoing edges from c
+ListChildren graphName c

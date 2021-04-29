@@ -1,0 +1,17 @@
+#Test to create two nodes in the graph but in a reverseOrder
+
+#Create a graph
+CreateGraph graphName
+
+#Add a node
+AddNode graphName b
+AddNode graphName a
+
+#Print nodes in the graph
+ListNode graphName
+
+#Print outgoing edges from a
+ListChildren graphName a
+
+#Print outgoing edges from b
+ListChildren graphName b

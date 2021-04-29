@@ -1,0 +1,23 @@
+#Test to create two nodes, one self-edge and one edge between different nodes in the graph
+
+#Create a graph
+CreateGraph graphName
+
+#Add two nodes
+AddNode graphName b
+AddNode graphName c
+
+#Add one self edge
+AddEdge graphName b b BB
+
+#Add one edge between different nodes
+AddEdge graphName b c BC
+
+#Print the nodes in the graph
+ListNode graphName
+
+#Print outgoing edges from b
+ListChildren graphName b
+
+#Print outgoing edges from c
+ListChildren graphName c

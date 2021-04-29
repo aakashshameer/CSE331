@@ -1,0 +1,30 @@
+#Test to create three nodes, with multiple edges in the graph
+
+#Create a graph
+create graph graphName
+
+#Add a node
+added node a to graphName
+added node b to graphName
+added node c to graphName
+
+#Add six edges
+added edge AA from a to a in graphName
+added edge AC from a to c in graphName
+added edge BB from b to b in graphName
+added edge BC from b to c in graphName
+added edge BC2 from b to c in graphName
+added edge CA from c to a in graphName
+added edge CB from c to b in graphName
+
+#Print nodes in the graph
+graphName contains: a b c
+
+#Print outgoing edges from a
+the children of a in graphName are: a(AA) c(AC)
+
+#Print outgoing edges from b
+the children of b in graphName are: b(BB) c(BC) c(BC2)
+
+#Print outgoing edges from c
+the children of c in graphName are: a(CA) b(CB)
