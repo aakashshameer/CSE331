@@ -1,11 +1,12 @@
 package graph;
 
+import java.util.Comparator;
 import java.util.Set;
 
 /**
     DirectedGraph is a class for a mutable directed graph with nodes and edges.
   */
-public class DirectedGraph {
+public class DirectedGraph<String, String1> {
 
      /**
       * Creates an new Directed Graph which is empty
@@ -64,13 +65,13 @@ public class DirectedGraph {
      *
      * @param origin the start of the edge
      * @param dest the end of the edge
-     * @throws IllegalArgumentException if origin and dest does not exist
+     * @throws IllegalArgumentException if origin or dest does not exist
      * @return true if edge is successful removed, false if edge doesn't exist
-     * @spec.requires origin != null, dest != null
+     * @spec.requires origin != null, dest != null, label != null
      * @spec.modifies this.edge
      * @spec.effects remove an edge from origin to dest to the graph if the edge already exist
      */
-    public String removeEdge (String origin, String dest){
+    public String removeEdge (String origin, String dest, String label){
         throw new RuntimeException("Not yet implemented");
     }
 

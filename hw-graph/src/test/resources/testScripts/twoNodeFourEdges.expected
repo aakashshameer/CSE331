@@ -1,25 +1,25 @@
 #Test to create two nodes, two self-edges and two edges between different nodes
 
 #Create a graph
-create graph graphName
+create graph dgraph
 
 #Add two nodes
-added node b to graphName
-added node c to graphName
+added node b to dgraph
+added node c to dgraph
 
 #Add two self edges
-added edge BB from b to b in graphName
-added edge CC from c to c in graphName
+added edge BB from b to b in dgraph
+added edge CC from c to c in dgraph
 
 #Add two edges between different nodes
-added edge BC from b to c in graphName
-added edge CB from c to b in graphName
+added edge BC from b to c in dgraph
+added edge CB from c to b in dgraph
 
 #Print the nodes in the graph
-graphName contains: b c
+dgraph contains: b c
 
 #Print outgoing edges from b
-the children of b in graphName are: b(BB) c(BC)
+the children of b in dgraph are: b(BB) c(BC)
 
 #Print outgoing edges from c
-the children of c in graphName are: b(CB) c(CC)
+the children of c in dgraph are: b(CB) c(CC)

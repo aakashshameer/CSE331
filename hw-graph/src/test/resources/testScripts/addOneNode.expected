@@ -1,13 +1,13 @@
 #Test to create a node in the graph
 
 #Create a graph
-create graph graphName
+create graph dgraph
 
 #Add a node
-added node a to graphName
+added node a to dgraph
 
 #Print nodes in the graph
-graphName contains: a
+dgraph contains: a
 
 #Print outgoing edges from a
-the children of a in graphName are:
+the children of a in dgraph are:

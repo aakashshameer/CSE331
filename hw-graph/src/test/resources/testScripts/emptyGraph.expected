@@ -1,7 +1,7 @@
 #Test that creates an empty graph
 
 #Create a graph
-created graph graphName
+created graph dgraph
 
 #Print the nodes in the graph
-graphName contains:
+dgraph contains:

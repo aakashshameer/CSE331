@@ -1,30 +1,30 @@
 #Test to create three nodes, with multiple edges in the graph
 
 #Create a graph
-CreateGraph graphName
+CreateGraph dgraph
 
 #Add a node
-AddNode graphName a
-AddNode graphName b
-AddNode graphName c
+AddNode dgraph a
+AddNode dgraph b
+AddNode dgraph c
 
 #Add six edges
-AddEdge graphName a a AA
-AddEdge graphName a c AC
-AddEdge graphName b b BB
-AddEdge graphName b c BC
-AddEdge graphName b c BC2
-AddEdge graphName c a CA
-AddEdge graphName c b CB
+AddEdge dgraph a a AA
+AddEdge dgraph a c AC
+AddEdge dgraph b b BB
+AddEdge dgraph b c BC
+AddEdge dgraph b c BC2
+AddEdge dgraph c a CA
+AddEdge dgraph c b CB
 
 #Print nodes in the graph
-ListNode graphName
+ListNode dgraph
 
 #Print outgoing edges from a
-ListChildren graphName a
+ListChildren dgraph a
 
 #Print outgoing edges from b
-ListChildren graphName b
+ListChildren dgraph b
 
 #Print outgoing edges from c
-ListChildren graphName c
+ListChildren dgraph c

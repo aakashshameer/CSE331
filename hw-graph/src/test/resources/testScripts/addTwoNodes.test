@@ -1,17 +1,17 @@
 #Test to create two nodes in the graph
 
 #Create a graph
-CreateGraph graphName
+CreateGraph dgraph
 
 #Add a node
-AddNode graphName a
-AddNode graphName b
+AddNode dgraph a
+AddNode dgraph b
 
 #Print nodes in the graph
-ListNode graphName
+ListNode dgraph
 
 #Print outgoing edges from a
-ListChildren graphName a
+ListChildren dgraph a
 
 #Print outgoing edges from b
-ListChildren graphName b
+ListChildren dgraph b

@@ -1,16 +1,16 @@
 #Test to create a node and an edge to itself in graph
 
 #Create a graph
-create graph graphName
+create graph dgraph
 
 #Add a node
-added node a to graphName
+added node a to dgraph
 
 #Add an edge
-added edge AA from a to a in graphName
+added edge AA from a to a in dgraph
 
 #Print nodes in the graph
-graphName contains: a
+dgraph contains: a
 
 #Print outgoing edges from a
-the children of a in graphName are: a(AA)
+the children of a in dgraph are: a(AA)

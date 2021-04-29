@@ -1,13 +1,13 @@
 #Test to create a node in the graph
 
 #Create a graph
-CreateGraph graphName
+CreateGraph dgraph
 
 #Add a node
-AddNode graphName a
+AddNode dgraph a
 
 #Print nodes in the graph
-ListNodes graphName
+ListNodes dgraph
 
 #Print outgoing edges from a
-ListChildren graphName a
+ListChildren dgraph a

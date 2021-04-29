@@ -1,23 +1,23 @@
 #Test to create two nodes, with multiple edges in the graph
 
 #Create a graph
-create graph graphName
+create graph dgraph
 
 #Add a node
-added node b to graphName
-added node c to graphName
+added node b to dgraph
+added node c to dgraph
 
 #Add four edges
-added edge BB from b to b in graphName
-added edge BC from b to c in graphName
-added edge BC2 from b to c in graphName
-added edge CB from c to b in graphName
+added edge BB from b to b in dgraph
+added edge BC from b to c in dgraph
+added edge BC2 from b to c in dgraph
+added edge CB from c to b in dgraph
 
 #Print nodes in the graph
-graphName contains: b c
+dgraph contains: b c
 
 #Print outgoing edges from b
-the children of b in graphName are: b(BB) c(BC) c(BC2)
+the children of b in dgraph are: b(BB) c(BC) c(BC2)
 
 #Print outgoing edges from c
-the children of c in graphName are: b(CB)
+the children of c in dgraph are: b(CB)

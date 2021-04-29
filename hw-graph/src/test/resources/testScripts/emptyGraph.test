@@ -1,7 +1,7 @@
 #Test that creates an empty graph
 
 #Create a graph
-CreateGraph graphName
+CreateGraph dgraph
 
 #Print the nodes in the graph
-ListNodes graphName
+ListNodes dgraph

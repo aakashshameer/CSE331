@@ -1,25 +1,25 @@
 #Test to create two nodes, two self-edges and two edges between different nodes
 
 #Create a graph
-CreateGraph graphName
+CreateGraph dgraph
 
 #Add two nodes
-Added graphName b
-Added graphName c
+Added dgraph b
+Added dgraph c
 
 #Add two self edges
-AddEdge graphName b b BB
-AddEdge graphName c c CC
+AddEdge dgraph b b BB
+AddEdge dgraph c c CC
 
 #Add two edges between different nodes
-AddEdge graphName b c BC
-AddEdge graphName c b CB
+AddEdge dgraph b c BC
+AddEdge dgraph c b CB
 
 #Print the nodes in the graph
-ListNodes graphName
+ListNodes dgraph
 
 #Print outgoing edges from b
-ListChildren graphName b
+ListChildren dgraph b
 
 #Print outgoing edges from c
-ListChildren graphName c
+ListChildren dgraph c

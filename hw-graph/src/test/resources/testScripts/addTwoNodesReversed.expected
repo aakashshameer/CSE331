@@ -1,17 +1,17 @@
 #Test to create two nodes in the graph but in a reverseOrder
 
 #Create a graph
-create graph graphName
+create graph dgraph
 
 #Add a node
-added node b to graphName
-added node a to graphName
+added node b to dgraph
+added node a to dgraph
 
 #Print nodes in the graph
-graphName contains: a b
+dgraph contains: a b
 
 #Print outgoing edges from a
-the children of a in graphName are:
+the children of a in dgraph are:
 
 #Print outgoing edges from b
-the children of a in graphName are:
+the children of a in dgraph are:

@@ -1,16 +1,16 @@
 #Test to create a node and an edge to itself in graph
 
 #Create a graph
-CreateGraph graphName
+CreateGraph dgraph
 
 #Add a node
-AddNode graphName a
+AddNode dgraph a
 
 #Add an edge
-AddEdge graphName a a AA
+AddEdge dgraph a a AA
 
 #Print nodes in the graph
-ListNodes graphName
+ListNodes dgraph
 
 #Print outgoing edges from a
-ListChildren graphName a
+ListChildren dgraph a
