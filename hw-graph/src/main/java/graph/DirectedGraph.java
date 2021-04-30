@@ -35,7 +35,7 @@ public class DirectedGraph<String, String1> {
       * removedNode method that removes node from the graph if it is present
       *
       * @param node node to remove from the graph
-      * @return true if the node is succesfully removed and false otherwise
+      * @return true if the node is successfully removed and false otherwise
       * @spec.requires node != null
       * @spec.modifies this.node
       * @spec.effects remove node from this.node if it is already present on the graph
@@ -51,7 +51,7 @@ public class DirectedGraph<String, String1> {
       * @param dest node which is the end of the edge
       * @param label label for this new edge
       * @throws IllegalArgumentException if origin or dest does not exist in our graph
-      * @return true if edge is successful added, false if edge already exit
+      * @return true if edge is successful added, false if edge already exist or can't be added
       * @spec.requires origin != null, dest != null, label != null
       * @spec.modifies this.edge
       * @spec.effects add edge from origin to dest to the graph if the edge didn't already exist
@@ -65,8 +65,9 @@ public class DirectedGraph<String, String1> {
      *
      * @param origin the start of the edge
      * @param dest the end of the edge
-     * @throws IllegalArgumentException if origin or dest does not exist
-     * @return true if edge is successful removed, false if edge doesn't exist
+     * @param label the label of the edge that we want to remove
+     * @throws IllegalArgumentException if origin, dest or label does not exist
+     * @return String the edge that was removed
      * @spec.requires origin != null, dest != null, label != null
      * @spec.modifies this.edge
      * @spec.effects remove an edge from origin to dest to the graph if the edge already exist
@@ -74,7 +75,6 @@ public class DirectedGraph<String, String1> {
     public String removeEdge (String origin, String dest, String label){
         throw new RuntimeException("Not yet implemented");
     }
-
 
     /**
      * pointingTo method that returns a Set of nodes that the parent node is pointing to
@@ -89,7 +89,8 @@ public class DirectedGraph<String, String1> {
     }
 
 
-     /**
+
+    /**
       * methods that determine if the node is in the graph
       *
       * @param node the node that we are trying to locate
@@ -147,6 +148,8 @@ public class DirectedGraph<String, String1> {
      *
      * @param node node that we want to find the edges going out from it
      * @return the Set of Strings of outgoing edges from the node
+     * @throws IllegalArgumentException if the node is not in our graph
+     * @spec.requires node != null
      */
     public Set<String> edgesFromNodesOutgoing (String node){
         throw new RuntimeException("Not yet implemented");
@@ -158,6 +161,8 @@ public class DirectedGraph<String, String1> {
      *
      * @param node node that we want to find the edges going into it
      * @return the Set of Strings of incoming edges from the node
+     * @throws IllegalArgumentException if the node is not in our graph
+     * @spec.requires node != null
      */
     public Set<String> edgesToNodesIncoming (String node){
         throw new RuntimeException("Not yet implemented");

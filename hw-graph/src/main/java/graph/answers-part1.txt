@@ -115,6 +115,8 @@ isEmpty() - determine whether the graph is empty or not.
 edgesFromNodeOutgoing() - returns a set of outgoing edges from the passed node.
 edgesToNodeIncoming() - returns a set of incoming edges from the passed node.
 
+I considered writing a class for the edges and nodes but I reckon that if wouldn't be needed as
+I could have them as a field and my graph ADT could function accordingly.
 
 
 
@@ -124,6 +126,12 @@ edgesToNodeIncoming() - returns a set of incoming edges from the passed node.
 
 What was your testing strategy for this assignment? How do your script tests and JUnit tests
 differ from each other (if they do), and why?
+
+My testing strategy was do test odd and obvious cases. These certain cases where I expected the test to fail
+and the output should follow that. My script test basically consisted of checking whether adding the nodes and
+edges was done correctly following the specification. My junit test on the other hand was expected to test cases
+where I expected an exception to be thrown and where I expected specific outputs such as null, false, true and
+specific numbers when I want to test the size.
 
 
 
