@@ -11,10 +11,10 @@
 # one, should only test one condition per file. The name and
 # comments of your files should describe the condition being tested.
 
-created graph A
+create graph A
 added node n1 to A
 added node n2 to A
-created graph B
+create graph B
 B contains:
 added node n3 to A
 added edge e31 from n3 to n1 in A

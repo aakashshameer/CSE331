@@ -14,7 +14,7 @@ AddEdge dgraph b b BB
 AddEdge dgraph b c BC
 
 #Print the nodes in the graph
-ListNode dgraph
+ListNodes dgraph
 
 #Print outgoing edges from b
 ListChildren dgraph b

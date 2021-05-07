@@ -11,7 +11,7 @@
 # comments of your files should describe the condition being tested.
 
 # Create a graph
-created graph graph1
+create graph graph1
 
 # Add a pair of nodes
 added node n1 to graph1

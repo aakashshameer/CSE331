@@ -8,7 +8,7 @@ AddNode dgraph b
 AddNode dgraph a
 
 #Print nodes in the graph
-ListNode dgraph
+ListNodes dgraph
 
 #Print outgoing edges from a
 ListChildren dgraph a

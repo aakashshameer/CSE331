@@ -14,4 +14,4 @@ dgraph contains: a b
 the children of a in dgraph are:
 
 #Print outgoing edges from b
-the children of a in dgraph are:
+the children of b in dgraph are:

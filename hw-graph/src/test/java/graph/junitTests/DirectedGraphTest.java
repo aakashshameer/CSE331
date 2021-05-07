@@ -233,13 +233,6 @@ public class DirectedGraphTest {
         assertTrue(directedGraph.addEdge(Node_X, Node_X, Self_Edge_XX));
     }
 
-//    @Test
-//    public void testGetChildrenAfterAddingSelfEdge (){
-//        testAddingSelfEdge();
-//        edges.add(new DirectedGraph.Edge(Self_Edge_XX, Node_X, Node_X));
-//        assertEquals(edges, directedGraph.edgesFromNodesOutgoing(Node_X));
-//    }
-
     @Test
     public void testToStringAfterAddingSelfEdge (){
         testAddingSelfEdge();
@@ -416,7 +409,4 @@ public class DirectedGraphTest {
         edges.add(new DirectedGraph.Edge(Edge_XY2, Node_X, Node_Y));
         assertEquals(edges, directedGraph.edgesFromNodesOutgoing(Node_X));
     }
-
-
-
 }

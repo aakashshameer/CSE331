@@ -17,6 +17,7 @@ public class DirectedGraph {
     //      {x = [], ...} if x is a node in the graph with no outgoing edges
     //      {x = [y(XY), z(XZ),.... , y = [], z = []} if y and z are children node of x with the labels XY and XZ respectively.
 
+    private final static boolean DEBUG = true;
     //our directed graph as a Map
     private final Map<String, HashSet<Edge>> directedGraph;
 
@@ -301,28 +302,31 @@ public class DirectedGraph {
         if(directedGraph == null){
             throw new RuntimeException("Our directed graph cannot be null");
         }
-        Set<String> allNodes = directedGraph.keySet();
 
-        for(String node: allNodes){
-            if(node == null){
-                throw new RuntimeException("Our node cannot be null");
-            }
-            HashSet<Edge> edgesFromNode = directedGraph.get(node);
+        if(DEBUG) {
+            Set<String> allNodes = directedGraph.keySet();
 
-            for(Edge e : edgesFromNode){
-                if(e == null){
-                    throw new RuntimeException("Our edges cannot be null");
+            for (String node : allNodes) {
+                if (node == null) {
+                    throw new RuntimeException("Our node cannot be null");
                 }
+                HashSet<Edge> edgesFromNode = directedGraph.get(node);
 
-                if (!directedGraph.containsKey(e.getParent())) {
-                    throw new RuntimeException("Parent node of the edge must exist before the edge");
+                for (Edge e : edgesFromNode) {
+                    if (e == null) {
+                        throw new RuntimeException("Our edges cannot be null");
+                    }
+
+                    if (!directedGraph.containsKey(e.getParent())) {
+                        throw new RuntimeException("Parent node of the edge must exist before the edge");
+                    }
+
+                    if (!directedGraph.containsKey(e.getChild())) {
+                        throw new RuntimeException("Child node of the edge must exist before the edge");
+                    }
+
+
                 }
-
-                if(!directedGraph.containsKey(e.getChild())){
-                    throw new RuntimeException("Child node of the edge must exist before the edge");
-                }
-
-
             }
         }
     }
@@ -407,6 +411,7 @@ public class DirectedGraph {
          *
          * @return a String representing the edge
          */
+        @Override
         public String toString (){
             checkRep();
             String result = "";
@@ -421,6 +426,7 @@ public class DirectedGraph {
          * @param n edge to be compared with
          * @return true of this and n are equal (same parent, child and label) and false otherwise
          */
+        @Override
         public boolean equals (Object n){
             checkRep();
             if(!(n instanceof Edge)){
@@ -437,6 +443,7 @@ public class DirectedGraph {
          *
          * @return the hash number of this edge
          */
+        @Override
         public int hashCode(){
             checkRep();
             int returnValue = getLabel().hashCode() + getParent().hashCode() + getChild().hashCode();

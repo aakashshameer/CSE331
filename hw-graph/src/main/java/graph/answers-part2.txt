@@ -30,8 +30,10 @@ This includes adding edges, removing edges and checking if an edge exist, all in
 chose it. If you chose to use a different representation than one of the three we described
 above, be sure to list its advantages and disadvantages, too.
 
-I choose using a HashMap with the keys being the Parent Node and the values being a set of Edges. I added a
-private class called 'Edge' in my DirectedGraph class to classify edges accordingly.
+I choose to use a Set to represent the outgoing edges and a HashMap to represent the nodes of our directed graph. This map
+maps each node to its Set of outgoing edges. In other words, the HashMap with the keys being the Parent Node and the values
+being a set of outgoing edges from that node. I also added a private class called 'Edge' in my DirectedGraph class to
+implement the outgoing edges accordingly.
 
 
 
@@ -44,14 +46,16 @@ private class called 'Edge' in my DirectedGraph class to classify edges accordin
 1. Describe any new tests you added and why you added them, or why you feel that your original
 tests alone are sufficient.
 
-From my part-1 test, I added a method called numberOfEdges which counts the numberOfEdges from one node to another.
-
+From my part-1 test, I added a method called numberOfEdges which counts the numberOfEdges from one node to another. Thus,
+I added test in j-unit for these methods to calculate the numberOfEdges at specific points of my graph to ensure that everything was working.
 
 
 
 
 2. Did you make any changes to your specifications as you were implementing your Graph? (yes/no)
 If yes, describe your changes and why you made them.
+No but I added an Edge class to implement the outgoing edges properly. Other than that, as I mentioned I added a method called
+numberOfEdges. But in terms of my specification, it has stayed the same.
 
 
 

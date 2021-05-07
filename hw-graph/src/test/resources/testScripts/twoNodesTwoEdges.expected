@@ -20,4 +20,4 @@ dgraph contains: b c
 the children of b in dgraph are: b(BB) c(BC)
 
 #Print outgoing edges from c
-the children of c in dgraph are: b(CB) c(CC)
+the children of c in dgraph are:

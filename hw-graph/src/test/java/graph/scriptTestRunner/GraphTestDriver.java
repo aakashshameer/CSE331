@@ -11,10 +11,10 @@
 
 package graph.scriptTestRunner;
 
+import graph.DirectedGraph;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * This class implements a testing driver which reads test scripts
@@ -30,7 +30,7 @@ public class GraphTestDriver {
      * String -> Graph: maps the names of graphs to the actual graph
      **/
     // TODO for the student: Uncomment and parameterize the next line correctly:
-    //private final Map<String, _______> graphs = new HashMap<String, ________>();
+    private final Map<String, DirectedGraph> graphs = new HashMap<String, DirectedGraph>();
     private final PrintWriter output;
     private final BufferedReader input;
 
@@ -115,10 +115,9 @@ public class GraphTestDriver {
     }
 
     private void createGraph(String graphName) {
-        // TODO Insert your code here.
 
-        // graphs.put(graphName, ___);
-        // output.println(...);
+        graphs.put(graphName, new DirectedGraph());
+        output.println("create graph " + graphName);
     }
 
     private void addNode(List<String> arguments) {
@@ -133,10 +132,9 @@ public class GraphTestDriver {
     }
 
     private void addNode(String graphName, String nodeName) {
-        // TODO Insert your code here.
-
-        // ___ = graphs.get(graphName);
-        // output.println(...);
+        DirectedGraph graph = graphs.get(graphName);
+        graph.addNode(nodeName);
+        output.println("added node " + nodeName + " to " + graphName);
     }
 
     private void addEdge(List<String> arguments) {
@@ -154,10 +152,10 @@ public class GraphTestDriver {
 
     private void addEdge(String graphName, String parentName, String childName,
                          String edgeLabel) {
-        // TODO Insert your code here.
-
-        // ___ = graphs.get(graphName);
-        // output.println(...);
+        DirectedGraph g = graphs.get(graphName);
+        g.addEdge(parentName, childName, edgeLabel);
+        output.println("added edge " + edgeLabel + " from " + parentName + " to " + childName +
+                " in " + graphName);
     }
 
     private void listNodes(List<String> arguments) {
@@ -170,10 +168,14 @@ public class GraphTestDriver {
     }
 
     private void listNodes(String graphName) {
-        // TODO Insert your code here.
+        DirectedGraph graph = graphs.get(graphName);
+        Set<String> n = new TreeSet<String>(graph.getNodes());
+        String result = graphName + " contains:";
+        for(String node : n){
+            result += " " + node;
+        }
 
-        // ___ = graphs.get(graphName);
-        // output.println(...);
+        output.println(result);
     }
 
     private void listChildren(List<String> arguments) {
@@ -187,10 +189,17 @@ public class GraphTestDriver {
     }
 
     private void listChildren(String graphName, String parentName) {
-        // TODO Insert your code here.
+        DirectedGraph graph = graphs.get(graphName);
+        String result = "the children of " + parentName + " in " + graphName + " are:";
 
-        // ___ = graphs.get(graphName);
-        // output.println(...);
+        Set<String> nodes = graph.getChildren(parentName);
+
+        Set<DirectedGraph.Edge> node_edges = graph.edgesFromNodesOutgoing(parentName);
+        for(DirectedGraph.Edge e: node_edges){
+            result += " " + e.getChild() + "(" + e.getLabel() + ")";
+        }
+
+        output.println(result);
     }
 
     /**
