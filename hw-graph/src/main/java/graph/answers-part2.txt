@@ -16,12 +16,22 @@ A few examples of possible Graph representations:
 representations listed above (for example, in terms of runtime complexity, space
 complexity, or ease of implementation).
 
+Collection of edges: For the collection of edges, the advantages that come with it is the constant time complexity, 0(1), when adding a new edge.
+
+An adjacency list: For this representation of a Graph, we can get constant time complexity, 0(1), when adding a node and also when adding an edge.
+
+An adjancency matrix: For this representation of a graph, we will get constant time complexity, 0(1), when doing most operations with the Graph.
+This includes adding edges, removing edges and checking if an edge exist, all in constant time.
+
 
 
 
 2. In two to three sentences, describe the representation you chose and explain why you
 chose it. If you chose to use a different representation than one of the three we described
 above, be sure to list its advantages and disadvantages, too.
+
+I choose using a HashMap with the keys being the Parent Node and the values being a set of Edges. I added a
+private class called 'Edge' in my DirectedGraph class to classify edges accordingly.
 
 
 
@@ -33,6 +43,9 @@ above, be sure to list its advantages and disadvantages, too.
 
 1. Describe any new tests you added and why you added them, or why you feel that your original
 tests alone are sufficient.
+
+From my part-1 test, I added a method called numberOfEdges which counts the numberOfEdges from one node to another.
+
 
 
 

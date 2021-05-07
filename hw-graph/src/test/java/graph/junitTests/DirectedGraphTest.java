@@ -10,10 +10,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class DirectedGraphTest {
+import org.junit.Rule;
+import org.junit.rules.Timeout;
 
-    private DirectedGraph<String, String> directedGraph;
+public class DirectedGraphTest {
+    @Rule public Timeout globalTimeout = Timeout.seconds(10);
+
+    private DirectedGraph directedGraph;
     private Set<String> nodes;
+    private Set<DirectedGraph.Edge> edges;
 
     private final String Node_X = "X";
     private final String Node_Y = "Y";
@@ -25,8 +30,9 @@ public class DirectedGraphTest {
     private final String Edge_XZ = "XZ";
 
     public DirectedGraphTest(){
-        directedGraph = new DirectedGraph<String, String>();
+        directedGraph = new DirectedGraph();
         nodes = new HashSet<String>();
+        edges = new HashSet<DirectedGraph.Edge>();
     }
 
     @Test
@@ -44,8 +50,13 @@ public class DirectedGraphTest {
         assertEquals(nodes, directedGraph.getNodes());
     }
 
+    @Test
+    public void testInitialToString() {
+        assertEquals("{}", directedGraph.toString());
+    }
 
-    @Test(expected = IllegalArgumentException.class )
+
+    @Test(expected = IllegalArgumentException.class)
     public void testAddNullNode(){
         directedGraph.addNode(null);
     }
@@ -57,7 +68,18 @@ public class DirectedGraphTest {
 
     @Test(expected = IllegalArgumentException.class )
     public void testChildrenNullNode(){
-        directedGraph.pointingTo(null);
+        directedGraph.getChildren(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetChildrenOnEmptyGraph (){
+        directedGraph.getChildren(Node_X);
+    }
+
+
+    @Test()
+    public void testContainsNodeOnEmptyGraph() {
+        assertFalse(directedGraph.containsNode(Node_X));
     }
 
     @Test(expected = IllegalArgumentException.class )
@@ -75,19 +97,30 @@ public class DirectedGraphTest {
         directedGraph.addEdge(Node_X, Node_Y, null);
     }
 
-    @Test(expected = IllegalArgumentException.class )
-    public void testRemoveEdgeFromNullToNullWithNullLabel() {
+    @Test(expected = IllegalArgumentException.class)
+    public void testRemoveEdgeFromNullToNullWithNullLabel (){
         directedGraph.removeEdge(null, null, null);
     }
 
     @Test(expected = IllegalArgumentException.class )
     public void testRemoveEdgeFromNodeToNullWithNullLabel(){
-        directedGraph.addEdge(Node_X, null, null);
+        directedGraph.removeEdge(Node_X, null, null);
     }
 
     @Test(expected = IllegalArgumentException.class )
     public void testRemoveEdgeFromNodeToNodeWithNullLabel(){
-        directedGraph.addEdge(Node_X, Node_Y, null);
+        directedGraph.removeEdge(Node_X, Node_Y, null);
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testNumberOfEdgesFromNullToNull (){
+        directedGraph.numberOfEdges(null, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testNumberOfEdgesFromNodeToNull (){
+        directedGraph.numberOfEdges(Node_X, null);
     }
 
     @Test
@@ -96,11 +129,10 @@ public class DirectedGraphTest {
     }
 
     @Test
-    public void testRemoveNonExistingNode (){
+    public void testToStringAfterAddingOneNode (){
         testAddFirstNode();
-        assertFalse(directedGraph.removeNode(Node_Y));
+        assertEquals("{X=[]}", directedGraph.toString());
     }
-
     @Test
     public void testSizeAfterAddingOneNode (){
         testAddFirstNode();
@@ -135,7 +167,7 @@ public class DirectedGraphTest {
     @Test
     public void testInitialChildrenBeforeAddingEdges(){
         testAddFirstNode();
-        assertTrue(directedGraph.pointingTo(Node_X).isEmpty());
+        assertTrue(directedGraph.getChildren(Node_X).isEmpty());
     }
 
     @Test
@@ -145,9 +177,21 @@ public class DirectedGraphTest {
     }
 
     @Test
+    public void testToStringAfterAddingANodeThatIsAlreadyAdded (){
+        testAddNodeThatIsAlreadyAdded();
+        assertEquals("{X=[]}", directedGraph.toString());
+    }
+
+    @Test
     public void testSizeAfterAddingDuplicateNodes (){
         testAddNodeThatIsAlreadyAdded();
         assertEquals(1, directedGraph.getSize());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddingEdgeWithNonExistingNode (){
+        testAddFirstNode();
+        assertFalse(directedGraph.addEdge(Node_X, Node_Z, Edge_XZ));
     }
 
     @Test
@@ -156,10 +200,10 @@ public class DirectedGraphTest {
         assertTrue(directedGraph.addNode(Node_Y));
     }
 
-    @Test
-    public void testAddingEdgeWithNonExistingNode (){
-        testAddingSecondNode();
-        assertFalse(directedGraph.addEdge(Node_X, Node_Z, Edge_XZ));
+    @Test(expected = IllegalArgumentException.class)
+    public void testNumberOfEdgesAfterAddingEdgeWithNonExistingNode (){
+        testAddingEdgeToNonExistingNode();
+        directedGraph.numberOfEdges(Node_X, Node_Y);
     }
 
     @Test
@@ -178,27 +222,41 @@ public class DirectedGraphTest {
     }
 
     @Test
+    public void testNumberOfEdgesBetweenTwoNodesWithoutAddingEdge (){
+        testAddingSecondNode();
+        assertEquals(0, directedGraph.numberOfEdges(Node_X, Node_Y));
+    }
+
+    @Test
     public void testAddingSelfEdge (){
         testAddFirstNode();
         assertTrue(directedGraph.addEdge(Node_X, Node_X, Self_Edge_XX));
     }
 
+//    @Test
+//    public void testGetChildrenAfterAddingSelfEdge (){
+//        testAddingSelfEdge();
+//        edges.add(new DirectedGraph.Edge(Self_Edge_XX, Node_X, Node_X));
+//        assertEquals(edges, directedGraph.edgesFromNodesOutgoing(Node_X));
+//    }
+
     @Test
-    public void testGetEdgeAfterAddingSelfEdge (){
+    public void testToStringAfterAddingSelfEdge (){
         testAddingSelfEdge();
-        assertTrue(directedGraph.containsEdge(Self_Edge_XX));
+        assertEquals("{X=[X(XX)]}", directedGraph.toString());
     }
 
     @Test
-    public void testContainsEdgeAfterAddingSelfEdge (){
+    public void testNumberOfEdgesAfterAddingSelfEdge (){
         testAddingSelfEdge();
-        assertTrue(directedGraph.containsEdge(Self_Edge_XX));
+        assertEquals(1, directedGraph.numberOfEdges(Node_X, Node_X));
     }
 
     @Test
     public void testRemoveSelfEdge (){
         testAddingSelfEdge();
-        assertEquals(Self_Edge_XX, directedGraph.removeEdge(Node_X, Node_X, Self_Edge_XX));
+        assertEquals(new DirectedGraph.Edge(Self_Edge_XX, Node_X, Node_X),
+                directedGraph.removeEdge(Node_X, Node_X, Self_Edge_XX));
     }
 
     @Test
@@ -207,10 +265,16 @@ public class DirectedGraphTest {
         assertTrue(null == directedGraph.removeEdge(Node_X, Node_X, Edge_XY));
     }
 
-    @Test (expected = IllegalArgumentException.class)
-    public void testRemoveNonExistingEdge (){
-        testAddingSelfEdge();
-        directedGraph.removeEdge(Node_X, Node_Y, Self_Edge_XX);
+    @Test
+    public void testToStringAfterRemovingSelfEdge (){
+        testRemoveSelfEdge();
+        assertEquals("{X=[]}", directedGraph.toString());
+    }
+
+    @Test
+    public void testGetChildrenAfterRemovingSelfEdge (){
+        testRemoveSelfEdge();
+        assertEquals(nodes, directedGraph.getChildren(Node_X));
     }
 
     @Test
@@ -220,9 +284,48 @@ public class DirectedGraphTest {
     }
 
     @Test
+    public void testEdgesFromOutgoingNodeXAfterAddingEdgeBetweenTwoDiffNodes (){
+        testAddEdgeBetweenTwoDiffNodes();
+        edges.add(new DirectedGraph.Edge(Edge_XY, Node_X, Node_Y));
+        assertEquals(edges, directedGraph.edgesFromNodesOutgoing(Node_X));
+    }
+
+    @Test
+    public void testEdgesFromOutgoingNodeYAfterAddingEdgeBetweenTwoDiffNodes (){
+        testAddEdgeBetweenTwoDiffNodes();
+        assertEquals(edges, directedGraph.edgesFromNodesOutgoing(Node_Y));
+    }
+
+    @Test
+    public void testGetChildrenAfterAddingTwoNodes (){
+        testAddEdgeBetweenTwoDiffNodes();
+        nodes.add(Node_Y);
+        assertEquals(nodes, directedGraph.getChildren(Node_X));
+    }
+
+    @Test
+    public void testNumberOfEdgesNodeXAfterAddingEdgeBetweenTwoDiffNodes (){
+        testAddEdgeBetweenTwoDiffNodes();
+        assertEquals(1, directedGraph.numberOfEdges(Node_X, Node_Y));
+    }
+
+    @Test
+    public void testNumberOfEdgesNodeYAfterAddingEdgeBetweenTwoDiffNodes (){
+        testAddEdgeBetweenTwoDiffNodes();
+        assertEquals(0, directedGraph.numberOfEdges(Node_Y, Node_X));
+    }
+
+    @Test
     public void testAddingExistingEdgeBetweenTwoNodes (){
         testAddEdgeBetweenTwoDiffNodes();
         assertFalse(directedGraph.addEdge(Node_X, Node_Y, Edge_XY));
+    }
+
+    @Test
+    public void testEdgesFromOutgoingAfterAddingExistingEdge(){
+        testAddingExistingEdgeBetweenTwoNodes();
+        edges.add(new DirectedGraph.Edge(Edge_XY, Node_X, Node_Y));
+        assertEquals(edges, directedGraph.edgesFromNodesOutgoing(Node_X));
     }
 
     @Test
@@ -230,6 +333,21 @@ public class DirectedGraphTest {
         testAddEdgeBetweenTwoDiffNodes();
         assertTrue(directedGraph.addEdge(Node_Y, Node_X, Edge_YX));
     }
+
+    @Test
+    public void testEdgesFromOutgoingNodeXAfterAddingReverseEdge (){
+        testAddingReverseEdgeBetweenTwoDiffNodes();
+        edges.add(new DirectedGraph.Edge(Edge_XY, Node_X, Node_Y));
+        assertEquals(edges, directedGraph.edgesFromNodesOutgoing(Node_X));
+    }
+
+    @Test
+    public void testEdgesFromOutgoingNodeYAfterAddingReverseEdge (){
+        testAddingReverseEdgeBetweenTwoDiffNodes();
+        edges.add(new DirectedGraph.Edge(Edge_YX, Node_Y, Node_X));
+        assertEquals(edges, directedGraph.edgesFromNodesOutgoing(Node_Y));
+    }
+
 
     @Test
     public void testAddingMultipleEdgesWithTwoNodes (){
@@ -241,12 +359,45 @@ public class DirectedGraphTest {
     }
 
     @Test
+    public void testEdgesFromOutgoingNodeXAfterAddingMultipleEdgesWithTwoNodes (){
+        testAddingMultipleEdgesWithTwoNodes();
+        edges.add(new DirectedGraph.Edge (Self_Edge_XX, Node_X, Node_X));
+        edges.add(new DirectedGraph.Edge(Edge_XY, Node_X, Node_Y));
+        assertEquals(edges, directedGraph.edgesFromNodesOutgoing(Node_X));
+    }
+
+    @Test
+    public void testEdgesFromOutgoingNodeYAfterAddingMultipleEdgesWithTwoNodes (){
+        testAddingMultipleEdgesWithTwoNodes();
+        edges.add(new DirectedGraph.Edge(Edge_YX, Node_Y, Node_X));
+        assertEquals(edges, directedGraph.edgesFromNodesOutgoing(Node_Y));
+    }
+
+    @Test
+    public void testNumberOfEdgesFromNodeXtoNodeYAfterAddingMultipleEdgesWithTwoNodes (){
+        testAddingMultipleEdgesWithTwoNodes();
+        assertEquals(1, directedGraph.numberOfEdges(Node_X, Node_Y));
+    }
+
+    @Test
+    public void testNumberOfEdgesFromNodeXtoNodeXAfterAddingMultipleEdgesWithTwoNodes (){
+        testAddingMultipleEdgesWithTwoNodes();
+        assertEquals(1, directedGraph.numberOfEdges(Node_X, Node_X));
+    }
+
+    @Test
+    public void testNumberOfEdgesFromNodeYtoNodeXAfterAddingMultipleEdgesWithTwoNodes (){
+        testAddingMultipleEdgesWithTwoNodes();
+        assertEquals(1, directedGraph.numberOfEdges(Node_Y, Node_X));
+    }
+
+    @Test
     public void testSizeAfterAddingMultipleEdges (){
         testAddingMultipleEdgesWithTwoNodes();
         assertEquals(2, directedGraph.getSize());
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testAddingEdgeToNonExistingNode (){
         testAddingSecondNode();
         assertFalse(directedGraph.addEdge(Node_X, Node_Z, Edge_XZ));
@@ -256,6 +407,14 @@ public class DirectedGraphTest {
     public void testAddingMultipleEdgesBetweenTwoDiffNodes (){
         testAddEdgeBetweenTwoDiffNodes();
         assertTrue(directedGraph.addEdge(Node_X, Node_Y, Edge_XY2));
+    }
+
+    @Test
+    public void testEdgesFromOutgoingAfterAddingMultipleEdgesBetweenTwoDiffNodes (){
+        testAddingMultipleEdgesBetweenTwoDiffNodes();
+        edges.add(new DirectedGraph.Edge(Edge_XY, Node_X, Node_Y));
+        edges.add(new DirectedGraph.Edge(Edge_XY2, Node_X, Node_Y));
+        assertEquals(edges, directedGraph.edgesFromNodesOutgoing(Node_X));
     }
 
 
