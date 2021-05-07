@@ -1,7 +1,7 @@
 #Test to create two nodes in the graph but in a reverseOrder
 
 #Create a graph
-create graph dgraph
+created graph dgraph
 
 #Add a node
 added node b to dgraph

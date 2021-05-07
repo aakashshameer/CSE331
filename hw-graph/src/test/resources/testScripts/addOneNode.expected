@@ -1,7 +1,7 @@
 #Test to create a node in the graph
 
 #Create a graph
-create graph dgraph
+created graph dgraph
 
 #Add a node
 added node a to dgraph

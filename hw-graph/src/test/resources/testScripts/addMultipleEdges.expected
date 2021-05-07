@@ -1,7 +1,7 @@
 #Test to create two nodes, with multiple edges in the graph
 
 #Create a graph
-create graph dgraph
+created graph dgraph
 
 #Add a node
 added node b to dgraph

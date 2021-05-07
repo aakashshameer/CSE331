@@ -1,7 +1,7 @@
 #Test that creates an empty graph
 
 #Create a graph
-create graph dgraph
+created graph dgraph
 
 #Print the nodes in the graph
 dgraph contains:

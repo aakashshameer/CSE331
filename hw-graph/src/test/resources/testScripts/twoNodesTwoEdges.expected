@@ -1,7 +1,7 @@
 #Test to create two nodes, one self-edge and one edge between different nodes in the graph
 
 #Create a graph
-create graph dgraph
+created graph dgraph
 
 #Add two nodes
 added node b to dgraph

@@ -117,7 +117,7 @@ public class GraphTestDriver {
     private void createGraph(String graphName) {
 
         graphs.put(graphName, new DirectedGraph());
-        output.println("create graph " + graphName);
+        output.println("created graph " + graphName);
     }
 
     private void addNode(List<String> arguments) {
