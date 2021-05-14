@@ -1,0 +1,7 @@
+# test BSF on marvel graph
+
+# build graph
+LoadGraph marvel marvel.csv
+
+# check BFS
+FindPath marvel M'SHULLA GORILLA-MAN

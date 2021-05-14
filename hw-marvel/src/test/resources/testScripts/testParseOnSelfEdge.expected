@@ -1,0 +1,11 @@
+# test Parser on SelfEdge data to make sure MarvelPath
+# doesn't allow building reflexive edges
+
+# Parse through the data and build the graph
+loaded graph selfEdge
+
+# List nodes and edges to see if the graph is built correctly
+ReflexiveEdge contains: A B C
+the children of A in selfEdge are: B(AB)
+the children of B in selfEdge are: A(AB) C(BC)
+the children of C in selfEdge are: B(BC)

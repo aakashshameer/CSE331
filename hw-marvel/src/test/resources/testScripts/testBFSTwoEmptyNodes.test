@@ -1,0 +1,12 @@
+# Test BFS on twoEmptyNodes graph
+
+# build the graph
+LoadGraph twoEmptyNodes twoEmptyNodes.csv
+
+# test BFS order
+
+# find the shortest path A to B
+FindPath twoEmptyNodes A B
+
+# find the shortest path B to A
+FindPath twoEmptyNodes B A

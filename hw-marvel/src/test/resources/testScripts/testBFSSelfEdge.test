@@ -1,0 +1,16 @@
+# test BFS on selfEdge data to make sure MarvelPath
+# doesn't allow building reflexive edges
+
+# build the graph
+LoadGraph selfEdge selfEdge.csv
+
+# test BFS order
+
+# find the shortest path A to C
+FindPath selfEdge A C
+
+# find the shortest path C to A
+FindPath selfEdge C A
+
+# find the shortest path A to A
+FindPath selfEdge A A

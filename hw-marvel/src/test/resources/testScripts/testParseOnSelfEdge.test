@@ -1,0 +1,11 @@
+# test Parser on SelfEdge data to make sure MarvelPath
+# doesn't allow building reflexive edges
+
+# Parse through the data and build the graph
+LoadGraph selfEdge selfEdge.csv
+
+# List nodes and edges to see if the graph is built correctly
+ListNodes selfEdge
+ListChildren selfEdge A
+ListChildren selfEdge B
+ListChildren selfEdge C

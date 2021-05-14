@@ -16,7 +16,10 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Parser utility to load the Marvel Comics dataset.
@@ -32,13 +35,25 @@ public class MarvelParser {
      * @spec.requires filename is a valid file in the resources/data folder.
      */
     // TODO: Replace 'void' with the type you want the parser to produce
-    public static void parseData(String filename) throws IOException {
+    public static HashMap<String, List<String>> parseData(String filename) throws IOException {
         List<String> lines = readLines(filename);
 
-        // TODO: Complete this method
-        // You'll need to:
-        //  - Split each line into its individual parts
-        //  - Collect the data into some convenient data structure(s) to return to the graph building code
+        HashMap<String, List<String>> books = new HashMap<>();
+
+        String comma = ",";
+        for(String l : lines){
+            String[] column = l.split(comma);
+            String character = column[0];
+            String book = column[1];
+
+            if(!books.containsKey(book)){
+                books.put(book, new ArrayList<>());
+                books.get(book).add(character);
+            } else {
+                books.get(book).add(character);
+            }
+        }
+        return books;
     }
 
     /**

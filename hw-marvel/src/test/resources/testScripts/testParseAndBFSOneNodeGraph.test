@@ -1,0 +1,11 @@
+# test parser and BFS on one node graph
+
+# build graph
+LoadGraph oneNodeGraph oneNode.csv
+
+# check graph is built correctly
+ListNodes oneNodeGraph
+ListChildren oneNodeGraph A
+
+#check BFS
+FindPath oneNodeGraph A A

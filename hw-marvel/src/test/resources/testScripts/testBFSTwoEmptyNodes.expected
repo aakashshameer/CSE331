@@ -1,0 +1,14 @@
+# Test BFS on twoEmptyNodes graph
+
+# build the graph
+loaded graph twoEmptyNodes
+
+# test BFS order
+
+# find the shortest path A to B
+path from A to B:
+no path found
+
+# find the shortest path B to A
+path from B to A:
+no path found
