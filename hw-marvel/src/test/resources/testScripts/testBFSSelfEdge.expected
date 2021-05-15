@@ -5,7 +5,6 @@
 loaded graph selfEdge
 
 # test BFS order
-
 # find the shortest path A to C
 path from A to C:
 A to B via AB

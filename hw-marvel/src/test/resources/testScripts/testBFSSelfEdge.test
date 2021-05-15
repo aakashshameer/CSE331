@@ -5,7 +5,6 @@
 LoadGraph selfEdge selfEdge.csv
 
 # test BFS order
-
 # find the shortest path A to C
 FindPath selfEdge A C
 

@@ -4,7 +4,6 @@
 LoadGraph twoEmptyNodes twoEmptyNodes.csv
 
 # test BFS order
-
 # find the shortest path A to B
 FindPath twoEmptyNodes A B
 

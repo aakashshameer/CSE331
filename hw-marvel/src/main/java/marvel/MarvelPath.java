@@ -33,15 +33,13 @@ public class MarvelPath {
     return graphMarvel;
     }
 
-    public static ArrayList<DirectedGraph.Edge> shortestPath (DirectedGraph graph, String origin, String dest){
+    public static List<DirectedGraph.Edge> shortestPath (DirectedGraph graph, String origin, String dest){
         if(graph == null | origin == null | dest == null){
             throw new IllegalArgumentException("graph, origin or dest cannot be null");
         }
-
         if(!(graph.containsNode(origin))){
             throw new IllegalArgumentException("the character " + origin + " is not in the graph");
         }
-
         if(!(graph.containsNode(dest))){
             throw new IllegalArgumentException("the character " + dest + " is not in the graph" );
         }
@@ -49,8 +47,6 @@ public class MarvelPath {
         LinkedList<String> nodesToVisit = new LinkedList<String>();
 
         HashMap<String, ArrayList<DirectedGraph.Edge>> pathList = new HashMap<String, ArrayList<DirectedGraph.Edge>>();
-
-        //List<String[]> path = new LinkedList<String[]>();
 
         pathList.put(origin, new ArrayList<DirectedGraph.Edge>());
         nodesToVisit.add(origin);
@@ -82,9 +78,35 @@ public class MarvelPath {
         return pathList.get(origin);
 
 
+//        Queue<String> visitNodes = new LinkedList<>();
+//
+//        Map<String, List<String[]>> map = new HashMap<>();
+//        visitNodes.add(origin);
+//        map.put(origin, new ArrayList<>());
+//
+//        while(!visitNodes.isEmpty()){
+//            String node = visitNodes.remove();
+//            if(node.equals(dest)){
+//                return map.get(node);
+//            }
+//
+//            List<String[]> sortedNode = outgoingEdges(graph, node);
+//            List<String[]> path = map.get(node);
+//
+//            for(String[] child: sortedNode){
+//                if(!map.containsKey(child[0])){
+//                    List<String[]> newPath = new LinkedList<>();
+//                    newPath.addAll(path);
+//                    newPath.add(child);
+//                    map.put(child[0], newPath);
+//                    visitNodes.add(child[0]);
+//                }
+//            }
+//        }
+//        return null;
     }
 
-    private static Comparator<DirectedGraph.Edge> compareAndSortEdges (){
+    private static Comparator<DirectedGraph.Edge> compareAndSortEdges(){
         Comparator<DirectedGraph.Edge> c = new Comparator<DirectedGraph.Edge>() {
             @Override
             public int compare(DirectedGraph.Edge o1, DirectedGraph.Edge o2) {
@@ -104,6 +126,28 @@ public class MarvelPath {
         };
         return c;
     }
+
+//    private static List<String[]> outgoingEdges (DirectedGraph graph, String n){
+//        List<String[]> sortedNode = new ArrayList<>();
+//        Map<String, String[]> childEdgeMap = new HashMap<>();
+//        Set<String> keys = graph.getChildren(n);
+//        Set<DirectedGraph.Edge> edges = graph.edgesFromNodesOutgoing(n);
+//
+//        for(String node : keys){
+//
+//
+//            for(DirectedGraph.Edge e : edges){
+//                String[] childEdge = new String[2];
+//                childEdge[0] = node;
+//                childEdge[1] = e.getLabel();
+//                sortedNode.add(childEdge);
+//            }
+//
+//        }
+//        return sortedNode;
+//
+//
+//    }
 
 
 
