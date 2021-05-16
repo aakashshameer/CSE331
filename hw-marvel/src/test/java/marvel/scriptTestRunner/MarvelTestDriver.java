@@ -12,7 +12,7 @@
 package marvel.scriptTestRunner;
 
 import graph.DirectedGraph;
-import marvel.MarvelPath;
+import marvel.MarvelPaths;
 
 import java.io.*;
 import java.util.*;
@@ -199,13 +199,26 @@ public class MarvelTestDriver {
     private void listChildren(String graphName, String parentName) {
         DirectedGraph graph = graphs.get(graphName);
         String result = "the children of " + parentName + " in " + graphName + " are:";
-
+        List<String > nodesList = new ArrayList<>();
         Set<String> nodes = graph.getChildren(parentName);
-
+        nodesList.addAll(nodes);
+        List<DirectedGraph.Edge > node_edges_list = new ArrayList<>();
         Set<DirectedGraph.Edge> node_edges = graph.edgesFromNodesOutgoing(parentName);
-        for(DirectedGraph.Edge e: node_edges){
-            result += " " + e.getChild() + "(" + e.getLabel() + ")";
+        node_edges_list.addAll(node_edges);
+
+        Collections.sort(nodesList);
+        int i = 0;
+            for(DirectedGraph.Edge e: node_edges){
+                String n = "";
+                if(i < nodesList.size()) {
+                    n = nodesList.get(i);
+                }
+
+                result += " " + n + "(" + e.getLabel() + ")";
+                i++;
+
         }
+
 
         output.println(result);
     }
@@ -220,8 +233,8 @@ public class MarvelTestDriver {
     }
 
     private void loadGraph(String graphName, String filename) throws Exception{
-        filename = "hw-marvel/src/main/resources/data/" + filename;
-        graphs.put(graphName, MarvelPath.buildGraph(filename));
+        //filename = "marvel.csv" + filename;
+        graphs.put(graphName, MarvelPaths.buildGraph(filename));
         output.println("loaded graph " + graphName);
     }
 
@@ -237,21 +250,24 @@ public class MarvelTestDriver {
 
     private void findPath(String graphName, String node1, String node2){
         DirectedGraph g= graphs.get(graphName);
-        List<DirectedGraph.Edge> path = MarvelPath.shortestPath(g, node1, node2);
+
         String result = "";
         if(!g.containsNode(node1) && !g.containsNode(node2)){
-            result += "unknown character " + node1;
-            result += "\n" + "unknown character" + node2;
+            result += "unknown: " + node1;
+            result += "\n" + "unknown: " + node2;
 
         } else if (!g.containsNode(node1)){
-            result += "unknown character node" + node1;
+            result += "unknown: " + node1;
         } else if (!g.containsNode(node2)){
-            result += "unknown character node" + node2;
+            result += "unknown: " + node2;
         } else {
+            List<DirectedGraph.Edge> path = MarvelPaths.shortestPath(g, node1, node2);
             result += "path from " + node1 + " to " + node2 + ":";
             String curr = node1;
             if(path == null){
                 result += "\n" + "no path found";
+            } else if(node1.equals(node2)){
+                result += "";
             } else {
                 for(DirectedGraph.Edge e: path){
                     result  += "\n" + curr + " to " + e.getChild() + " via " + e.getLabel();

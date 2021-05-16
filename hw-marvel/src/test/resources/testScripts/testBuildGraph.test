@@ -1,0 +1,4 @@
+#Testing building the graph
+
+# build the graph
+LoadGraph marvel marvel.csv

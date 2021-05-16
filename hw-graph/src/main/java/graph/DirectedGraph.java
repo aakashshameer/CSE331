@@ -17,7 +17,7 @@ public class DirectedGraph {
     //      {x = [], ...} if x is a node in the graph with no outgoing edges
     //      {x = [y(XY), z(XZ),.... , y = [], z = []} if y and z are children node of x with the labels XY and XZ respectively.
 
-    private final static boolean DEBUG = true;
+    private final static boolean DEBUG = false;
     //our directed graph as a Map
     private final Map<String, HashSet<Edge>> directedGraph;
 
