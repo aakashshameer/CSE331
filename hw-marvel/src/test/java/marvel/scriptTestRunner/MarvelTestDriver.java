@@ -197,30 +197,49 @@ public class MarvelTestDriver {
     }
 
     private void listChildren(String graphName, String parentName) {
-        DirectedGraph<String, String> graph = graphs.get(graphName);
-        String result = "the children of " + parentName + " in " + graphName + " are:";
-        List<String > nodesList = new ArrayList<>();
-        Set<String> nodes = graph.getChildren(parentName);
-        nodesList.addAll(nodes);
-        List<DirectedGraph.Edge<String, String> > node_edges_list = new ArrayList<>();
-        Set<DirectedGraph.Edge<String, String>> node_edges = graph.edgesFromNodesOutgoing(parentName);
-        node_edges_list.addAll(node_edges);
+        DirectedGraph<String, String> g = graphs.get(graphName);
+        String res = "the children of " + parentName + " in " + graphName + " are:";
+        Set<DirectedGraph.Edge<String, String>> list = g.edgesFromNodesOutgoing(parentName);
 
-        Collections.sort(nodesList);
-        int i = 0;
-            for(DirectedGraph.Edge<String, String> e: node_edges){
-                String n = "";
-                if(i < nodesList.size()) {
-                    n = nodesList.get(i);
-                }
-
-                result += " " + n + "(" + e.getLabel() + ")";
-                i++;
-
+        Map<String, String> m = new HashMap<>();
+        for (DirectedGraph.Edge<String, String> e : list) {
+            m.put(e.getChild(), e.getLabel());
         }
+        List<String> childNames = new ArrayList<>();
+        for (DirectedGraph.Edge<String, String> e : list) {
+            childNames.add(e.getChild());
+        }
+        Collections.sort(childNames);
 
-
-        output.println(result);
+        for (int i = 0; i < childNames.size(); i++) {
+            String curr = childNames.get(i);
+            res += " " + curr + "(" + m.get(curr) + ")";
+        }
+        output.println(res);
+//        DirectedGraph<String, String> graph = graphs.get(graphName);
+//        String result = "the children of " + parentName + " in " + graphName + " are:";
+//        List<String > nodesList = new ArrayList<>();
+//        Set<String> nodes = graph.getChildren(parentName);
+//        nodesList.addAll(nodes);
+//        List<DirectedGraph.Edge<String, String> > node_edges_list = new ArrayList<>();
+//        Set<DirectedGraph.Edge<String, String>> node_edges = graph.edgesFromNodesOutgoing(parentName);
+//        node_edges_list.addAll(node_edges);
+//
+//        Collections.sort(nodesList);
+//        int i = 0;
+//            for(DirectedGraph.Edge<String, String> e: node_edges){
+//                String n = "";
+//                if(i < nodesList.size()) {
+//                    n = nodesList.get(i);
+//                }
+//
+//                result += " " + n + "(" + e.getLabel() + ")";
+//                i++;
+//
+//        }
+//
+//
+//        output.println(result);
     }
 
     private void loadGraph(List<String> arguments) throws Exception {

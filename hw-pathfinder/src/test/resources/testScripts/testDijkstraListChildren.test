@@ -1,0 +1,16 @@
+#List the children of these nodes numerically
+
+CreateGraph childrenGraph
+
+AddNode childrenGraph A
+AddNode childrenGraph B
+AddNode childrenGraph C
+
+AddEdge childrenGraph A B 3.0
+AddEdge childrenGraph B C 10.0
+AddEdge childrenGraph A C 5.0
+AddEdge childrenGraph B A 2.0
+
+ListChildren childrenGraph A
+ListChildren childrenGraph B
+

@@ -1,0 +1,11 @@
+#Find a path with the Dijkstra's algorithm with TwoNodes
+
+CreateGraph twoNodesGraph
+
+AddNode twoNodesGraph A
+AddNode twoNodesGraph B
+
+AddEdge twoNodesGraph A B 1.0
+AddEdge twoNodesGraph A B 2.0
+
+FindPath twoNodesGraph A B

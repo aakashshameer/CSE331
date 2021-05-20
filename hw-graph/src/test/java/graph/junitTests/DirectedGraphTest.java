@@ -16,9 +16,9 @@ import org.junit.rules.Timeout;
 public class DirectedGraphTest {
     @Rule public Timeout globalTimeout = Timeout.seconds(10);
 
-    private DirectedGraph directedGraph;
+    private DirectedGraph<String, String> directedGraph;
     private Set<String> nodes;
-    private Set<DirectedGraph.Edge> edges;
+    private Set<DirectedGraph.Edge<String, String>> edges;
 
     private final String Node_X = "X";
     private final String Node_Y = "Y";
@@ -30,9 +30,9 @@ public class DirectedGraphTest {
     private final String Edge_XZ = "XZ";
 
     public DirectedGraphTest(){
-        directedGraph = new DirectedGraph();
+        directedGraph = new DirectedGraph<String, String>();
         nodes = new HashSet<String>();
-        edges = new HashSet<DirectedGraph.Edge>();
+        edges = new HashSet<DirectedGraph.Edge<String, String>>();
     }
 
     @Test
@@ -248,7 +248,7 @@ public class DirectedGraphTest {
     @Test
     public void testRemoveSelfEdge (){
         testAddingSelfEdge();
-        assertEquals(new DirectedGraph.Edge(Self_Edge_XX, Node_X, Node_X),
+        assertEquals(new DirectedGraph.Edge<String, String>(Self_Edge_XX, Node_X, Node_X),
                 directedGraph.removeEdge(Node_X, Node_X, Self_Edge_XX));
     }
 
@@ -279,7 +279,7 @@ public class DirectedGraphTest {
     @Test
     public void testEdgesFromOutgoingNodeXAfterAddingEdgeBetweenTwoDiffNodes (){
         testAddEdgeBetweenTwoDiffNodes();
-        edges.add(new DirectedGraph.Edge(Edge_XY, Node_X, Node_Y));
+        edges.add(new DirectedGraph.Edge<String, String>(Edge_XY, Node_X, Node_Y));
         assertEquals(edges, directedGraph.edgesFromNodesOutgoing(Node_X));
     }
 
@@ -317,7 +317,7 @@ public class DirectedGraphTest {
     @Test
     public void testEdgesFromOutgoingAfterAddingExistingEdge(){
         testAddingExistingEdgeBetweenTwoNodes();
-        edges.add(new DirectedGraph.Edge(Edge_XY, Node_X, Node_Y));
+        edges.add(new DirectedGraph.Edge<String, String>(Edge_XY, Node_X, Node_Y));
         assertEquals(edges, directedGraph.edgesFromNodesOutgoing(Node_X));
     }
 
@@ -330,14 +330,14 @@ public class DirectedGraphTest {
     @Test
     public void testEdgesFromOutgoingNodeXAfterAddingReverseEdge (){
         testAddingReverseEdgeBetweenTwoDiffNodes();
-        edges.add(new DirectedGraph.Edge(Edge_XY, Node_X, Node_Y));
+        edges.add(new DirectedGraph.Edge<String, String>(Edge_XY, Node_X, Node_Y));
         assertEquals(edges, directedGraph.edgesFromNodesOutgoing(Node_X));
     }
 
     @Test
     public void testEdgesFromOutgoingNodeYAfterAddingReverseEdge (){
         testAddingReverseEdgeBetweenTwoDiffNodes();
-        edges.add(new DirectedGraph.Edge(Edge_YX, Node_Y, Node_X));
+        edges.add(new DirectedGraph.Edge<String, String>(Edge_YX, Node_Y, Node_X));
         assertEquals(edges, directedGraph.edgesFromNodesOutgoing(Node_Y));
     }
 
@@ -354,15 +354,15 @@ public class DirectedGraphTest {
     @Test
     public void testEdgesFromOutgoingNodeXAfterAddingMultipleEdgesWithTwoNodes (){
         testAddingMultipleEdgesWithTwoNodes();
-        edges.add(new DirectedGraph.Edge (Self_Edge_XX, Node_X, Node_X));
-        edges.add(new DirectedGraph.Edge(Edge_XY, Node_X, Node_Y));
+        edges.add(new DirectedGraph.Edge<String, String> (Self_Edge_XX, Node_X, Node_X));
+        edges.add(new DirectedGraph.Edge<String, String>(Edge_XY, Node_X, Node_Y));
         assertEquals(edges, directedGraph.edgesFromNodesOutgoing(Node_X));
     }
 
     @Test
     public void testEdgesFromOutgoingNodeYAfterAddingMultipleEdgesWithTwoNodes (){
         testAddingMultipleEdgesWithTwoNodes();
-        edges.add(new DirectedGraph.Edge(Edge_YX, Node_Y, Node_X));
+        edges.add(new DirectedGraph.Edge<String, String>(Edge_YX, Node_Y, Node_X));
         assertEquals(edges, directedGraph.edgesFromNodesOutgoing(Node_Y));
     }
 
@@ -405,8 +405,8 @@ public class DirectedGraphTest {
     @Test
     public void testEdgesFromOutgoingAfterAddingMultipleEdgesBetweenTwoDiffNodes (){
         testAddingMultipleEdgesBetweenTwoDiffNodes();
-        edges.add(new DirectedGraph.Edge(Edge_XY, Node_X, Node_Y));
-        edges.add(new DirectedGraph.Edge(Edge_XY2, Node_X, Node_Y));
+        edges.add(new DirectedGraph.Edge<String, String>(Edge_XY, Node_X, Node_Y));
+        edges.add(new DirectedGraph.Edge<String, String>(Edge_XY2, Node_X, Node_Y));
         assertEquals(edges, directedGraph.edgesFromNodesOutgoing(Node_X));
     }
 }

@@ -1,0 +1,15 @@
+#List the children of these nodes numerically
+
+created graph childrenGraph
+
+added node A to childrenGraph
+added node B to childrenGraph
+added node C to childrenGraph
+
+added edge 3.000 from A to B in childrenGraph
+added edge 10.000 from B to C in childrenGraph
+added edge 5.000 from A to C in childrenGraph
+added edge 2.000 from B to A in childrenGraph
+
+the children of A in childrenGraph are: B(3.000) C(5.000)
+the children of B in childrenGraph are: A(2.000) C(10.000)

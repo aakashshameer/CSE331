@@ -194,8 +194,8 @@ public class GraphTestDriver {
 
         Set<String> nodes = graph.getChildren(parentName);
 
-        Set<DirectedGraph<String, String>.Edge<String, String> node_edges = graph.edgesFromNodesOutgoing(parentName);
-        for(DirectedGraph<String, String>.Edge e: node_edges){
+        Set<DirectedGraph.Edge<String, String>> node_edges = graph.edgesFromNodesOutgoing(parentName);
+        for(DirectedGraph.Edge<String, String> e: node_edges){
             result += " " + e.getChild() + "(" + e.getLabel() + ")";
         }
 

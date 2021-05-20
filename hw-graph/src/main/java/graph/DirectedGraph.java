@@ -143,7 +143,7 @@ public class DirectedGraph<T, E extends Comparable<E>> {
      * @return a set of nodes that the parent node is pointing to
      * @spec.requires node != null
      */
-    public Set<T> getChildren (String node){
+    public Set<T> getChildren (T node){
         if(node == null){
             throw new IllegalArgumentException("Passed in node cannot be null.");
         }
