@@ -5,7 +5,7 @@ import marvel.MarvelPaths;
 import org.junit.Test;
 
 public class MarvelPathsTest {
-    private DirectedGraph graph;
+    private DirectedGraph<String, String> graph;
 
     public void setUp () throws Exception {
         graph = MarvelPaths.buildGraph("hw-marvel/src/main/resources/data/football.csv");

@@ -33,7 +33,7 @@ public class MarvelParser {
      * @param filename the file that will be read
      * @throws IOException if an error occurs while reading the file
      * @spec.requires filename is a valid file in the resources/data folder.
-     * @returns a HashMap with the parse data received from the give file
+     * @return a HashMap with the parse data received from the give file
      */
     // TODO: Replace 'void' with the type you want the parser to produce
     public static HashMap<String, List<String>> parseData(String filename) throws IOException {

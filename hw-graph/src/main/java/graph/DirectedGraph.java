@@ -6,7 +6,7 @@ import java.util.*;
 /**
     DirectedGraph is a class for a mutable directed graph with nodes and edges.
   */
-public class DirectedGraph {
+public class DirectedGraph<T, E extends Comparable<E>> {
     //Representation Invariant:
     //  DirectedGraph != null, every node and edge in the graph will not be null.
     //  If an edge exist between node(s), the node(s) must be in DirectedGraph
@@ -19,7 +19,7 @@ public class DirectedGraph {
 
     private final static boolean DEBUG = false;
     //our directed graph as a Map
-    private final Map<String, HashSet<Edge>> directedGraph;
+    private final Map<T, HashSet<Edge<T, E>>> directedGraph;
 
      /**
       * Creates an new Directed Graph which is empty
@@ -29,7 +29,7 @@ public class DirectedGraph {
     public DirectedGraph(){
         //construct new Map
         //throw new RuntimeException("Not yet implemented");
-        directedGraph = new HashMap<String, HashSet<Edge>>();
+        directedGraph = new HashMap<T, HashSet<Edge<T, E>>>();
         checkRep();
     }
 
@@ -44,13 +44,13 @@ public class DirectedGraph {
     * @spec.modifies this
     * @spec.effects add new node to this if it isn't already present
      */
-    public boolean addNode (String node) {
+    public boolean addNode (T node) {
         checkRep();
         if (node == null) {
             throw new IllegalArgumentException("Passed in node cannot be null");
         }
             if (!directedGraph.containsKey(node)) {
-                HashSet<Edge> newSet = new HashSet<Edge>();
+                HashSet<Edge<T, E>> newSet = new HashSet<Edge<T, E>>();
                 directedGraph.put(node, newSet);
                 checkRep();
                 return true;
@@ -74,7 +74,7 @@ public class DirectedGraph {
       * @spec.modifies this.edge
       * @spec.effects add edge from origin to dest to the graph if the edge didn't already exist
       */
-     public boolean addEdge (String origin, String dest, String label){
+     public boolean addEdge (T origin, T dest, E label){
          checkRep();
 
          if(origin == null || dest == null || label == null){
@@ -85,8 +85,8 @@ public class DirectedGraph {
              throw new IllegalArgumentException("Parent node or child node passed in does not exist in our graph");
          }
 
-         HashSet<Edge> originEdges = directedGraph.get(origin);
-         Edge e = new Edge(label, origin, dest);
+         HashSet<Edge<T, E>> originEdges = directedGraph.get(origin);
+         Edge<T, E> e = new Edge<T, E>(label, origin, dest);
 
          if(!(originEdges.contains(e))){
              originEdges.add(e);
@@ -112,7 +112,7 @@ public class DirectedGraph {
      * @spec.modifies this.edge
      * @spec.effects remove an edge from origin to dest to the graph if the edge already exist
      */
-    public Edge removeEdge (String origin, String dest, String label){
+    public Edge<T, E> removeEdge (T origin, T dest, E label){
         checkRep();
 
         if(origin == null || dest == null || label == null){
@@ -123,8 +123,8 @@ public class DirectedGraph {
             throw new IllegalArgumentException("parent or child node doesn't exist in our graph.");
         }
 
-        HashSet<Edge> edgesFromOrigin = directedGraph.get(origin);
-        Edge e = new Edge (label, origin, dest);
+        HashSet<Edge<T, E>> edgesFromOrigin = directedGraph.get(origin);
+        Edge<T, E> e = new Edge<T, E> (label, origin, dest);
         if(edgesFromOrigin.contains(e)){
             edgesFromOrigin.remove(e);
             checkRep();
@@ -143,7 +143,7 @@ public class DirectedGraph {
      * @return a set of nodes that the parent node is pointing to
      * @spec.requires node != null
      */
-    public Set<String> getChildren (String node){
+    public Set<T> getChildren (String node){
         if(node == null){
             throw new IllegalArgumentException("Passed in node cannot be null.");
         }
@@ -151,11 +151,11 @@ public class DirectedGraph {
         if (!directedGraph.containsKey(node)){
             throw new IllegalArgumentException("Node does not exist in our graph");
         }
-        HashSet<String> childrenNodes = new HashSet<>();
-        HashSet<Edge> edgesFrom = directedGraph.get(node);
+        HashSet<T> childrenNodes = new HashSet<>();
+        HashSet<Edge<T, E>> edgesFrom = directedGraph.get(node);
 
-        for(Edge e : edgesFrom){
-            String child = e.getChild();
+        for(Edge<T, E> e : edgesFrom){
+            T child = e.getChild();
             childrenNodes.add(child);
         }
 
@@ -172,7 +172,7 @@ public class DirectedGraph {
       * @return true if the node is in our nodes and false otherwise
       * @spec.requires node != null
       */
-     public boolean containsNode (String node) {
+     public boolean containsNode (T node) {
          checkRep();
 
          if(node == null){
@@ -192,10 +192,10 @@ public class DirectedGraph {
       *
       * @return a Set of Strings that represents all nodes in the graph
       */
-     public Set<String> getNodes () {
+     public Set<T> getNodes () {
 
          checkRep();
-         Set<String> nodes = directedGraph.keySet();
+         Set<T> nodes = directedGraph.keySet();
          checkRep();
          return nodes;
     }
@@ -235,17 +235,17 @@ public class DirectedGraph {
      * @throws IllegalArgumentException if the node is not in our graph
      * @spec.requires node != null
      */
-    public Set<Edge> edgesFromNodesOutgoing (String node){
+    public Set<Edge<T, E>> edgesFromNodesOutgoing (T node){
         checkRep();
 
         if(node == null || !containsNode(node)){
             throw new IllegalArgumentException("Passed node cannot either be null or not in our graph");
         }
 
-        HashSet<Edge> edges = directedGraph.get(node);
+        HashSet<Edge<T, E>> edges = directedGraph.get(node);
 
         checkRep();
-        return new HashSet<Edge>(edges);
+        return new HashSet<Edge<T, E>>(edges);
     }
 
     /**
@@ -270,7 +270,7 @@ public class DirectedGraph {
      * @throws IllegalArgumentException if the passed origin and destination node is not in our graph
      * @spec.requires origin != null, dest != null
      */
-    public int numberOfEdges (String origin, String dest){
+    public int numberOfEdges (T origin, T dest){
         checkRep();
 
         if(origin == null || dest == null){
@@ -282,8 +282,8 @@ public class DirectedGraph {
         }
         int nOfEdges = 0;
 
-        HashSet<Edge> edges = directedGraph.get(origin);
-        for(Edge e : edges){
+        HashSet<Edge<T, E>> edges = directedGraph.get(origin);
+        for(Edge<T, E> e : edges){
             if(e.getChild().equals(dest)){
                 nOfEdges++;
             }
@@ -304,15 +304,15 @@ public class DirectedGraph {
         }
 
         if(DEBUG) {
-            Set<String> allNodes = directedGraph.keySet();
+            Set<T> allNodes = directedGraph.keySet();
 
-            for (String node : allNodes) {
+            for (T node : allNodes) {
                 if (node == null) {
                     throw new RuntimeException("Our node cannot be null");
                 }
-                HashSet<Edge> edgesFromNode = directedGraph.get(node);
+                HashSet<Edge<T, E>> edgesFromNode = directedGraph.get(node);
 
-                for (Edge e : edgesFromNode) {
+                for (Edge<T, E> e : edgesFromNode) {
                     if (e == null) {
                         throw new RuntimeException("Our edges cannot be null");
                     }
@@ -341,7 +341,7 @@ public class DirectedGraph {
      * @author Aakash Shameer Bin Srazali
      * @version 05/06/2021
      */
-    public static class Edge {
+    public static class Edge<T, E extends Comparable<E>> implements Comparable<Edge<T, E>> {
         //Representation invariant:
         //  label != null && parent != null && child != null
 
@@ -352,9 +352,9 @@ public class DirectedGraph {
         //      edge.label = this.label
 
         //fields
-        private final String label; //label of the edge
-        private final String parent; //parent(origin) of the edge
-        private final String child; //child(destination) of the edge
+        private final E label; //label of the edge
+        private final T parent; //parent(origin) of the edge
+        private final T child; //child(destination) of the edge
 
 
         /**
@@ -366,7 +366,7 @@ public class DirectedGraph {
          * @spec.requires label != null, parent != null, child != null
          * @spec.effects constructs an edge with a parent(origin) and child(destination) node
          */
-        public Edge(String label, String parent, String child) {
+        public Edge(E label, T parent, T child) {
             if(label == null || parent == null || child == null){
                 throw new IllegalArgumentException("Passed in label, parent and child cannot be null");
             }
@@ -381,7 +381,7 @@ public class DirectedGraph {
          *
          * @return the parent(origin) node of the edge
          */
-        public String getParent (){
+        public T getParent (){
             checkRep();
             return parent;
         }
@@ -391,7 +391,7 @@ public class DirectedGraph {
          *
          * @return the child(destination) node of the edge
          */
-        public String getChild (){
+        public T getChild (){
             checkRep();
             return child;
         }
@@ -401,7 +401,7 @@ public class DirectedGraph {
          *
          * @return the label of the edge
          */
-        public String getLabel (){
+        public E getLabel (){
             checkRep();
             return label;
         }
@@ -470,6 +470,28 @@ public class DirectedGraph {
         }
 
 
+        @Override
+        public int compareTo(Edge<T, E> o) {
+            checkRep();
+
+            if (!(label.equals(o.label))) {
+                checkRep();
+                return label.compareTo(o.label);
+            }
+
+            if (!(parent.equals(o.parent))) {
+                checkRep();
+                return parent.hashCode() - o.parent.hashCode();
+            }
+
+            if (!(child.equals(o.child))) {
+                checkRep();
+                return child.hashCode() - o.child.hashCode();
+            }
+
+            checkRep();
+            return 0;
+        }
     }
 
 }

@@ -17,17 +17,17 @@ public class MarvelPaths {
      * @param filename file to be used to build the graph
      * @spec.requires filename != null
      * @return a graph, DirectedGraph, which contains all the data from file passed in
-     * @throws IllegalArgumentException if fail to read data from the specified
+     * @throws Exception if fail to read data from the specified
      *         file or the format of the file does not match the expected format
      */
-    public static DirectedGraph buildGraph (String filename) throws Exception{
+    public static DirectedGraph<String, String> buildGraph (String filename) throws Exception{
         if(filename == null){
             throw new IllegalArgumentException("filename cannot be null");
         }
 
         Map<String, List<String>> books = MarvelParser.parseData(filename);
 
-        DirectedGraph graphMarvel = new DirectedGraph();
+        DirectedGraph<String, String> graphMarvel = new DirectedGraph<String, String>();
 
         for(String book : books.keySet()){
             for(String nParent: books.get(book)) {
@@ -55,7 +55,7 @@ public class MarvelPaths {
      * @return the shortest path from start to end, or null if
      *         no path exists from start to end
      */
-    public static List<DirectedGraph.Edge> shortestPath (DirectedGraph graph, String origin, String dest){
+    public static List<DirectedGraph.Edge<String, String>> shortestPath (DirectedGraph<String, String> graph, String origin, String dest){
         if(graph == null | origin == null | dest == null){
             throw new IllegalArgumentException("graph, origin or dest cannot be null");
         }
@@ -68,30 +68,30 @@ public class MarvelPaths {
 
         LinkedList<String> nodesToVisit = new LinkedList<String>();
 
-        Map<String, ArrayList<DirectedGraph.Edge>> map = new HashMap<String, ArrayList<DirectedGraph.Edge>>();
+        Map<String, ArrayList<DirectedGraph.Edge<String, String>>> map = new HashMap<String, ArrayList<DirectedGraph.Edge<String, String>>>();
 
-        map.put(origin, new ArrayList<DirectedGraph.Edge>());
+        map.put(origin, new ArrayList<DirectedGraph.Edge<String, String>>());
         nodesToVisit.add(origin);
 
         while(!nodesToVisit.isEmpty()){
             String n = nodesToVisit.removeFirst();
             if(n.equals(dest)){
-                ArrayList<DirectedGraph.Edge> path = map.get(n);
-                return new ArrayList<DirectedGraph.Edge>(path);
+                ArrayList<DirectedGraph.Edge<String, String>> path = map.get(n);
+                return new ArrayList<DirectedGraph.Edge<String, String>>(path);
                 //return map.get(origin);
             }
 
-            ArrayList<DirectedGraph.Edge> edgeSet = new ArrayList<DirectedGraph.Edge>();
-            Comparator<DirectedGraph.Edge> compare = compareAndSortEdges();
+            ArrayList<DirectedGraph.Edge<String, String>> edgeSet = new ArrayList<DirectedGraph.Edge<String, String>>();
+            Comparator<DirectedGraph.Edge<String, String>> compare = compareAndSortEdges();
             edgeSet.addAll(graph.edgesFromNodesOutgoing(n));
             Collections.sort(edgeSet, compare);
 
-            for(DirectedGraph.Edge e : edgeSet){
+            for(DirectedGraph.Edge<String, String> e : edgeSet){
                 String end = e.getChild();
 
                 if(!(map.containsKey(end))){
-                    ArrayList<DirectedGraph.Edge> path_old = map.get(n);
-                    ArrayList<DirectedGraph.Edge> path_new = new ArrayList<DirectedGraph.Edge>(path_old);
+                    ArrayList<DirectedGraph.Edge<String, String>> path_old = map.get(n);
+                    ArrayList<DirectedGraph.Edge<String, String>> path_new = new ArrayList<DirectedGraph.Edge<String, String>>(path_old);
                     path_new.add(e);
                     map.put(end, path_new);
                     nodesToVisit.add(end);
@@ -110,13 +110,13 @@ public class MarvelPaths {
      * @return negative integer, zero or positive integer if first
      * Edge is less, equal or greater than the second Edge
      */
-    private static Comparator<DirectedGraph.Edge> compareAndSortEdges(){
-        Comparator<DirectedGraph.Edge> c = new Comparator<DirectedGraph.Edge>() {
+    private static Comparator<DirectedGraph.Edge<String, String>> compareAndSortEdges(){
+        Comparator<DirectedGraph.Edge<String, String>> c = new Comparator<DirectedGraph.Edge<String, String>>() {
             @Override
-            public int compare(DirectedGraph.Edge o1, DirectedGraph.Edge o2) {
-//                if(!(o1.getParent().equals(o2.getParent()))){
-//                    return o1.getParent().compareTo(o2.getParent());
-//                }
+            public int compare(DirectedGraph.Edge<String, String> o1, DirectedGraph.Edge<String, String> o2) {
+                if(!(o1.getParent().equals(o2.getParent()))){
+                    return o1.getParent().compareTo(o2.getParent());
+                }
 
                 if(!(o1.getChild().equals(o2.getChild()))){
                     return o1.getChild().compareTo(o2.getChild());
@@ -137,7 +137,7 @@ public class MarvelPaths {
      * @throws Exception
      */
     public static void main(String[] args ) throws Exception{
-        DirectedGraph g = buildGraph("marvel.csv");
+        DirectedGraph<String, String> g = buildGraph("marvel.csv");
         System.out.println("Welcome to the Marvel Cinematic and Comic Book Universe of Characters.");
         System.out.println();
         System.out.println("I am Female Replacement Intelligent Digital Assistant Youth or F.R.I.D.A.Y for short, at your service. ");
@@ -159,7 +159,7 @@ public class MarvelPaths {
         } else if (!g.containsNode(node2)){
             result += "unknown: " + node2;
         } else {
-            List<DirectedGraph.Edge> path = MarvelPaths.shortestPath(g, node1, node2);
+            List<DirectedGraph.Edge<String, String>> path = MarvelPaths.shortestPath(g, node1, node2);
             result += "path from " + node1 + " to " + node2 + ":";
             String curr = node1;
             if(path == null){
@@ -167,7 +167,7 @@ public class MarvelPaths {
             } else if(node1.equals(node2)){
                 result += "";
             } else {
-                for(DirectedGraph.Edge e: path){
+                for(DirectedGraph.Edge<String, String> e: path){
                     result  += "\n" + curr + " to " + e.getChild() + " via " + e.getLabel();
                     curr = e.getChild();
                 }

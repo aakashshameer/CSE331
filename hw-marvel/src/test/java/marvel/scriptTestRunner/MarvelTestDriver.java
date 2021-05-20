@@ -27,7 +27,7 @@ public class MarvelTestDriver {
      * String -> Graph: maps the names of graphs to the actual graph
      **/
     // TODO for the student: Uncomment and parameterize the next line correctly:
-    private final Map<String, DirectedGraph> graphs = new HashMap<String, DirectedGraph>();
+    private final Map<String, DirectedGraph<String, String>> graphs = new HashMap<String, DirectedGraph<String, String>>();
     private final PrintWriter output;
     private final BufferedReader input;
 
@@ -124,7 +124,7 @@ public class MarvelTestDriver {
 
     private void createGraph(String graphName) {
 
-        graphs.put(graphName, new DirectedGraph());
+        graphs.put(graphName, new DirectedGraph<String, String>());
         output.println("created graph " + graphName);
     }
 
@@ -140,7 +140,7 @@ public class MarvelTestDriver {
     }
 
     private void addNode(String graphName, String nodeName) {
-        DirectedGraph graph = graphs.get(graphName);
+        DirectedGraph<String, String> graph = graphs.get(graphName);
         graph.addNode(nodeName);
         output.println("added node " + nodeName + " to " + graphName);
     }
@@ -160,7 +160,7 @@ public class MarvelTestDriver {
 
     private void addEdge(String graphName, String parentName, String childName,
                          String edgeLabel) {
-        DirectedGraph g = graphs.get(graphName);
+        DirectedGraph<String, String> g = graphs.get(graphName);
         g.addEdge(parentName, childName, edgeLabel);
         output.println("added edge " + edgeLabel + " from " + parentName + " to " + childName +
                 " in " + graphName);
@@ -176,7 +176,7 @@ public class MarvelTestDriver {
     }
 
     private void listNodes(String graphName) {
-        DirectedGraph graph = graphs.get(graphName);
+        DirectedGraph<String, String> graph = graphs.get(graphName);
         Set<String> n = new TreeSet<String>(graph.getNodes());
         String result = graphName + " contains:";
         for(String node : n){
@@ -197,18 +197,18 @@ public class MarvelTestDriver {
     }
 
     private void listChildren(String graphName, String parentName) {
-        DirectedGraph graph = graphs.get(graphName);
+        DirectedGraph<String, String> graph = graphs.get(graphName);
         String result = "the children of " + parentName + " in " + graphName + " are:";
         List<String > nodesList = new ArrayList<>();
         Set<String> nodes = graph.getChildren(parentName);
         nodesList.addAll(nodes);
-        List<DirectedGraph.Edge > node_edges_list = new ArrayList<>();
-        Set<DirectedGraph.Edge> node_edges = graph.edgesFromNodesOutgoing(parentName);
+        List<DirectedGraph.Edge<String, String> > node_edges_list = new ArrayList<>();
+        Set<DirectedGraph.Edge<String, String>> node_edges = graph.edgesFromNodesOutgoing(parentName);
         node_edges_list.addAll(node_edges);
 
         Collections.sort(nodesList);
         int i = 0;
-            for(DirectedGraph.Edge e: node_edges){
+            for(DirectedGraph.Edge<String, String> e: node_edges){
                 String n = "";
                 if(i < nodesList.size()) {
                     n = nodesList.get(i);
@@ -249,7 +249,7 @@ public class MarvelTestDriver {
     }
 
     private void findPath(String graphName, String node1, String node2){
-        DirectedGraph g= graphs.get(graphName);
+        DirectedGraph<String, String> g= graphs.get(graphName);
 
         String result = "";
         if(!g.containsNode(node1) && !g.containsNode(node2)){
@@ -261,7 +261,7 @@ public class MarvelTestDriver {
         } else if (!g.containsNode(node2)){
             result += "unknown: " + node2;
         } else {
-            List<DirectedGraph.Edge> path = MarvelPaths.shortestPath(g, node1, node2);
+            List<DirectedGraph.Edge<String, String>> path = MarvelPaths.shortestPath(g, node1, node2);
             result += "path from " + node1 + " to " + node2 + ":";
             String curr = node1;
             if(path == null){
@@ -269,7 +269,7 @@ public class MarvelTestDriver {
             } else if(node1.equals(node2)){
                 result += "";
             } else {
-                for(DirectedGraph.Edge e: path){
+                for(DirectedGraph.Edge<String, String> e: path){
                     result  += "\n" + curr + " to " + e.getChild() + " via " + e.getLabel();
                     curr = e.getChild();
                 }

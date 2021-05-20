@@ -30,7 +30,7 @@ public class GraphTestDriver {
      * String -> Graph: maps the names of graphs to the actual graph
      **/
     // TODO for the student: Uncomment and parameterize the next line correctly:
-    private final Map<String, DirectedGraph> graphs = new HashMap<String, DirectedGraph>();
+    private final Map<String, DirectedGraph<String, String>> graphs = new HashMap<>();
     private final PrintWriter output;
     private final BufferedReader input;
 
@@ -116,7 +116,7 @@ public class GraphTestDriver {
 
     private void createGraph(String graphName) {
 
-        graphs.put(graphName, new DirectedGraph());
+        graphs.put(graphName, new DirectedGraph<String, String>());
         output.println("created graph " + graphName);
     }
 
@@ -132,7 +132,7 @@ public class GraphTestDriver {
     }
 
     private void addNode(String graphName, String nodeName) {
-        DirectedGraph graph = graphs.get(graphName);
+        DirectedGraph<String, String> graph = graphs.get(graphName);
         graph.addNode(nodeName);
         output.println("added node " + nodeName + " to " + graphName);
     }
@@ -152,7 +152,7 @@ public class GraphTestDriver {
 
     private void addEdge(String graphName, String parentName, String childName,
                          String edgeLabel) {
-        DirectedGraph g = graphs.get(graphName);
+        DirectedGraph<String, String> g = graphs.get(graphName);
         g.addEdge(parentName, childName, edgeLabel);
         output.println("added edge " + edgeLabel + " from " + parentName + " to " + childName +
                 " in " + graphName);
@@ -168,7 +168,7 @@ public class GraphTestDriver {
     }
 
     private void listNodes(String graphName) {
-        DirectedGraph graph = graphs.get(graphName);
+        DirectedGraph<String, String> graph = graphs.get(graphName);
         Set<String> n = new TreeSet<String>(graph.getNodes());
         String result = graphName + " contains:";
         for(String node : n){
@@ -189,13 +189,13 @@ public class GraphTestDriver {
     }
 
     private void listChildren(String graphName, String parentName) {
-        DirectedGraph graph = graphs.get(graphName);
+        DirectedGraph<String, String> graph = graphs.get(graphName);
         String result = "the children of " + parentName + " in " + graphName + " are:";
 
         Set<String> nodes = graph.getChildren(parentName);
 
-        Set<DirectedGraph.Edge> node_edges = graph.edgesFromNodesOutgoing(parentName);
-        for(DirectedGraph.Edge e: node_edges){
+        Set<DirectedGraph<String, String>.Edge<String, String> node_edges = graph.edgesFromNodesOutgoing(parentName);
+        for(DirectedGraph<String, String>.Edge e: node_edges){
             result += " " + e.getChild() + "(" + e.getLabel() + ")";
         }
 
