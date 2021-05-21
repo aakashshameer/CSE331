@@ -1,2 +1,6 @@
 Briefly list any changes you made to your graph class during hw-pathfinder, and why you made those changes.
 
+The only changes I made to my graph class and edge class is by including generics. In this assignment, we saw the use
+of different types of object like Path, Point and etc. Therefore, using these generics really come in hand as we can use these
+classes for different objects which reduces the need of creating new classes for these different objects.
+
