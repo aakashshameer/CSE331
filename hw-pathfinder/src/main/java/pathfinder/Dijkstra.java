@@ -14,7 +14,7 @@ public class Dijkstra<T> {
     /**
      * constructor  which creates a new graph
      * @param graph passed-in graph
-     * @spec.effects new Djikstra's graph is created
+     * @spec.effects new Dijkstra's graph is created
      */
     public Dijkstra(DirectedGraph<T, Double> graph){
         this.graph = graph;
@@ -25,7 +25,7 @@ public class Dijkstra<T> {
      *
      * @param start  the starting node
      * @param dest the destination node
-     * @spec.requires start != null, dest != null
+     * @spec.requires start != null, dest != null, start and dest to be in our graph
      * @return Path minimum path from start and dest
      */
     public Path<T> minimumPath(T start, T dest){

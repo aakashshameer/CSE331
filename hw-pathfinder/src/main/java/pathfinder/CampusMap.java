@@ -12,38 +12,47 @@
 package pathfinder;
 
 import graph.DirectedGraph;
-import marvel.MarvelPaths;
 import pathfinder.datastructures.Path;
 import pathfinder.datastructures.Point;
 import pathfinder.parser.CampusBuilding;
 import pathfinder.parser.CampusPath;
 import pathfinder.parser.CampusPathsParser;
-import pathfinder.textInterface.CoordinateProperties;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A class that contains the CampusMap which can find two points between buildings.
+ *
+ */
 public class CampusMap<T> implements ModelAPI<T> {
 
+    //list of buildings
     private final List<CampusBuilding> campusBuildings;
 
+    //list of paths
     private final List<CampusPath> campusPaths;
 
-    private final DirectedGraph<CampusBuilding, Double> campusGraph;
-
-    private final Dijkstra<CampusBuilding> dijkstra;
-
+    /**
+     * constructor that enables the list of buildings and path
+     *
+     * @param fileContainingBuildings filename with the buildings
+     * @param fileContainingPaths filename with the paths
+     * @spec.effects list of buildings and list of paths
+     */
     public CampusMap (String fileContainingBuildings, String fileContainingPaths){
-
-
         campusBuildings = CampusPathsParser.parseCampusBuildings(fileContainingBuildings);
         campusPaths = CampusPathsParser.parseCampusPaths(fileContainingPaths);
-        campusGraph = new DirectedGraph<>();
-        dijkstra = new Dijkstra<>(campusGraph);
 
     }
 
+    /**
+     * shortName method that returns true if the abbreatied name exist
+     *
+     * @param shortName The short name of a building to query.
+     * @return true iff the short name provided exists in this campus map and false otherwise
+     */
     @Override
     public boolean shortNameExists(String shortName) {
         for(CampusBuilding c : campusBuildings){
@@ -54,6 +63,13 @@ public class CampusMap<T> implements ModelAPI<T> {
         return false;
     }
 
+    /**
+     * longNameForShort method that returns the long name of a building when we pass in the short name
+     *
+     * @param shortName The short name of a building to look up.
+     * @return The long name of the building corresponding to the provided short name.
+     * @throws IllegalArgumentException if the short name provided does not exist.
+     */
     @Override
     public String longNameForShort(String shortName) throws IllegalArgumentException{
         if(shortName == null){
@@ -70,11 +86,15 @@ public class CampusMap<T> implements ModelAPI<T> {
         }
         return null;
     }
-
+    /**
+     * buildingName that returns a Map cotaining the building short name to long name
+     *
+     * @return A mapping from all the buildings' short names to their long names in this campus map.
+     */
     @Override
     public Map<String, String> buildingNames() {
 
-        Map<String, String > buildings = new HashMap<>();
+        Map<String, String> buildings = new HashMap<>();
 
         for(CampusBuilding c : campusBuildings){
             buildings.put(c.getShortName(), c.getLongName());
@@ -83,8 +103,19 @@ public class CampusMap<T> implements ModelAPI<T> {
 
     }
 
+    /**
+     * Finds the shortest path, by distance, between the two provided buildings.
+     *
+     * @param startShortName The short name of the building at the beginning of this path.
+     * @param endShortName   The short name of the building at the end of this path.
+     * @return A path between {@code startBuilding} and {@code endBuilding}, or {@literal null}
+     * if none exists.
+     * @throws IllegalArgumentException if {@code startBuilding} or {@code endBuilding} are
+     *                                  {@literal null}, or not valid short names of buildings in
+     *                                  this campus map.
+     */
     @Override
-    public Path<Point> findShortestPath(String startShortName, String endShortName) {
+    public Path<Point> findShortestPath(String startShortName, String endShortName) throws IllegalArgumentException{
         if (startShortName == null || endShortName == null) {
             throw new IllegalArgumentException("Invalid Buildings");
         }
@@ -94,14 +125,14 @@ public class CampusMap<T> implements ModelAPI<T> {
         Point start = new Point(-1, -1);
         Point end = new Point(-1, -1);
 
-        for (int i = 0; i < campusBuildings.size(); i++) {
-            Point point = new Point(campusBuildings.get(i).getX(), campusBuildings.get(i).getY());
+        for (CampusBuilding campusBuilding : campusBuildings) {
+            Point point = new Point(campusBuilding.getX(), campusBuilding.getY());
             graph.addNode(point);
-            if (campusBuildings.get(i).getShortName().equals(startShortName)) {
-                start = new Point(campusBuildings.get(i).getX(), campusBuildings.get(i).getY());
+            if (campusBuilding.getShortName().equals(startShortName)) {
+                start = new Point(campusBuilding.getX(), campusBuilding.getY());
             }
-            if (campusBuildings.get(i).getShortName().equals(endShortName)) {
-                end = new Point(campusBuildings.get(i).getX(), campusBuildings.get(i).getY());
+            if (campusBuilding.getShortName().equals(endShortName)) {
+                end = new Point(campusBuilding.getX(), campusBuilding.getY());
             }
         }
 
@@ -109,17 +140,17 @@ public class CampusMap<T> implements ModelAPI<T> {
             throw new IllegalArgumentException("Invalid Buildings");
         }
 
-        for (int i = 0; i < campusPaths.size(); i++) {
-            Point n1 = new Point(campusPaths.get(i).getX1(), campusPaths.get(i).getY1());
-            Point n2 = new Point(campusPaths.get(i).getX2(), campusPaths.get(i).getY2());
+        for (CampusPath campusPath : campusPaths) {
+            Point n1 = new Point(campusPath.getX1(), campusPath.getY1());
+            Point n2 = new Point(campusPath.getX2(), campusPath.getY2());
             if (!graph.containsNode(n1)) {
                 graph.addNode(n1);
             }
             if (!graph.containsNode(n2)) {
                 graph.addNode(n2);
             }
-            graph.addEdge(n1, n2, campusPaths.get(i).getDistance());
-            graph.addEdge(n2, n1, campusPaths.get(i).getDistance());
+            graph.addEdge(n1, n2, campusPath.getDistance());
+            graph.addEdge(n2, n1, campusPath.getDistance());
         }
 
         Dijkstra<Point> dijkstra = new Dijkstra<>(graph);

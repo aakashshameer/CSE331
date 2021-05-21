@@ -206,31 +206,6 @@ public class PathfinderTestDriver {
         }
         output.println(res);
 
-//        DirectedGraph<String, Double> graph = graphs.get(graphName);
-//        String result = "the children of " + parentName + " in " + graphName + " are:";
-//        List<String > nodesList = new ArrayList<>();
-//        Set<String> nodes = graph.getChildren(parentName);
-//        nodesList.addAll(nodes);
-//        List<DirectedGraph.Edge<String, Double> > node_edges_list = new ArrayList<>();
-//        Set<DirectedGraph.Edge<String, Double>> node_edges = graph.edgesFromNodesOutgoing(parentName);
-//        node_edges_list.addAll(node_edges);
-//
-//        Collections.sort(nodesList);
-//        Collections.sort(node_edges_list);
-//
-//        int i = 0;
-//        for(DirectedGraph.Edge<String, Double> e: node_edges){
-//            String n = "";
-//            if(i < nodesList.size()) {
-//                n = nodesList.get(i);
-//            }
-//
-//            result += " " + n + "(" + String.format("%.3f", e.getLabel())+ ")";
-//            i++;
-//
-//        }
-//
-//        output.println(result);
     }
 
     private void findPath(List<String> arguments){
