@@ -9,12 +9,12 @@ public class Dijkstra<T> {
     /**
      * To represent our graph
      */
-    private DirectedGraph<T, Double> graph;
+    private final DirectedGraph<T, Double> graph;
 
     /**
      * constructor  which creates a new graph
      * @param graph passed-in graph
-     * @effects new Djikstra's graph is created
+     * @spec.effects new Djikstra's graph is created
      */
     public Dijkstra(DirectedGraph<T, Double> graph){
         this.graph = graph;
@@ -26,17 +26,28 @@ public class Dijkstra<T> {
      * @param start  the starting node
      * @param dest the destination node
      * @spec.requires start != null, dest != null
-     * @return Path<T> minimum path from start and dest
+     * @return Path minimum path from start and dest
      */
     public Path<T> minimumPath(T start, T dest){
         if(start == null || dest == null){
             throw new IllegalArgumentException("start and dest cannot be null");
         }
-        Queue<Path<T>> active = new PriorityQueue<>();
+
+        if(!graph.containsNode(start) || !graph.containsNode(dest)){
+            throw new IllegalArgumentException("start or dest node have to be in our graph");
+        }
+        Queue<Path<T>> active = new PriorityQueue<>(new Comparator<Path<T>>() {
+            @Override
+            public int compare(Path<T> o1, Path<T> o2) {
+                if(!o1.equals(o2)){
+                    return o1.hashCode() - o2.hashCode();
+                }
+                return 0;
+            }
+        });
         Set<T> finished = new HashSet<>();
 
         Path<T> selfPath =  new Path<>(start);
-        selfPath.extend(start, 0.0);
         active.add(selfPath);
 
         while (!active.isEmpty()){
@@ -55,9 +66,9 @@ public class Dijkstra<T> {
                 T child = e.getChild();
                 Double label = e.getLabel();
 
-                if(finished.contains(child)) {
-                    minPath.extend(child, label);
-                    active.add(minPath);
+                if(!finished.contains(child)) {
+                    Path<T> newPath = minPath.extend(child, label);
+                    active.add(newPath);
                 }
             }
             finished.add(minDest);
