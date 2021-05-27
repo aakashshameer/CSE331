@@ -30,7 +30,9 @@ class App extends Component<{}, AppState> { // <- {} means no props.
         };
     }
 
+
     updateGridSize = (newSize: number) => {
+        //if(Number.isNaN(newSize)) return;
         this.setState({
             gridSize: newSize
         });

@@ -18,7 +18,16 @@ interface GridSizePickerProps {
     onChange(newSize: number): void;  // called when a new size is picked
 }
 
-class GridSizePicker extends Component<GridSizePickerProps> {
+interface GridSizePickerState {
+    value: string;
+}
+
+class GridSizePicker extends Component<GridSizePickerProps, GridSizePickerState> {
+
+    constructor(props: GridSizePickerProps) {
+        super(props);
+        this.state = {value : ""};
+    }
 
     onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         // Every event handler with JS can optionally take a single parameter that
@@ -28,8 +37,20 @@ class GridSizePicker extends Component<GridSizePickerProps> {
         // below.
         //
         // TODO - Not currently doing any validation or error handling. Should probably add some...
+
         const newSize: number = parseInt(event.target.value);
-        this.props.onChange(newSize); // Tell our parent component about the new size.
+
+        if(Number.isNaN(newSize)){
+            this.setState ({ value : "" });
+            this.props.onChange(0);
+
+        } else if(newSize > 100){
+            window.alert("Size must be an integer between 0 and 100 (inclusive).");
+
+        } else {
+            this.setState ({ value : ""+newSize });
+            this.props.onChange(newSize); // Tell our parent component about the new size.
+        }
     };
 
     render() {
@@ -38,7 +59,7 @@ class GridSizePicker extends Component<GridSizePickerProps> {
                 <label>
                     Grid Size:
                     <input
-                        value={this.props.value}
+                        value={this.state.value}
                         onChange={this.onInputChange}
                         type="number"
                         min={1}

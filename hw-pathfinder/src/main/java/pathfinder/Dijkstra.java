@@ -36,6 +36,7 @@ public class Dijkstra<T> {
         if(!graph.containsNode(start) || !graph.containsNode(dest)){
             throw new IllegalArgumentException("start or dest node have to be in our graph");
         }
+
         Queue<Path<T>> active = new PriorityQueue<>(new Comparator<Path<T>>() {
             @Override
             public int compare(Path<T> o1, Path<T> o2) {
