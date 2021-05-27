@@ -18,6 +18,7 @@ interface EdgeListProps {
 
 interface EdgeListState {
     value: string;
+    map: Map<number, string>;
 }
 
 /**
@@ -28,7 +29,7 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
 
     constructor(props: EdgeListProps) {
         super(props);
-        this.state = {value : ""};
+        this.state = {value : "", map : new Map()};
     }
 
     onInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -60,15 +61,14 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
 
             }
 
-
-
             map.set(i, entries);
         }
 
         if(error){
             window.alert(alert);
         }
-
+        this.setState({map : map})
+        this.props.onChange(this.state.map);
     }
 
     render() {

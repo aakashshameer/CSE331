@@ -17,8 +17,9 @@ import GridSizePicker from "./GridSizePicker";
 // Allows us to write CSS styles inside App.css, any any styles will apply to all components inside <App />
 import "./App.css";
 
-interface AppState {
+export interface AppState {
     gridSize: number;  // size of the grid to display
+    map : Map<number, string>;
 }
 
 class App extends Component<{}, AppState> { // <- {} means no props.
@@ -27,6 +28,7 @@ class App extends Component<{}, AppState> { // <- {} means no props.
         super(props);
         this.state = {
             gridSize: 4,
+            map : new Map()
         };
     }
 
@@ -38,6 +40,11 @@ class App extends Component<{}, AppState> { // <- {} means no props.
         });
     };
 
+    updateEdgeList = (map: Map<number, string>) => {
+        this.setState({map : map});
+        console.log(this.state.map);
+    }
+
     render() {
         const canvas_size = 500;
         return (
@@ -45,7 +52,7 @@ class App extends Component<{}, AppState> { // <- {} means no props.
                 <p id="app-title">Connect the Dots!</p>
                 <GridSizePicker value={this.state.gridSize.toString()} onChange={this.updateGridSize}/>
                 <Grid size={this.state.gridSize} width={canvas_size} height={canvas_size}/>
-                <EdgeList onChange={(value) => {console.log("EdgeList onChange", value)}}/>
+                <EdgeList onChange={(this.updateEdgeList)}/>
             </div>
 
         );
