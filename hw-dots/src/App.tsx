@@ -19,7 +19,7 @@ import "./App.css";
 
 export interface AppState {
     gridSize: number;  // size of the grid to display
-    map : Map<number, string>;
+    map : Map<number, string[]>;
 }
 
 class App extends Component<{}, AppState> { // <- {} means no props.
@@ -40,9 +40,8 @@ class App extends Component<{}, AppState> { // <- {} means no props.
         });
     };
 
-    updateEdgeList = (map: Map<number, string>) => {
+    updateEdgeList = (map: Map<number, string[]>) => {
         this.setState({map : map});
-        console.log(this.state.map);
     }
 
     render() {
@@ -51,8 +50,8 @@ class App extends Component<{}, AppState> { // <- {} means no props.
             <div>
                 <p id="app-title">Connect the Dots!</p>
                 <GridSizePicker value={this.state.gridSize.toString()} onChange={this.updateGridSize}/>
-                <Grid size={this.state.gridSize} width={canvas_size} height={canvas_size}/>
-                <EdgeList onChange={(this.updateEdgeList)}/>
+                <Grid size={this.state.gridSize} width={canvas_size} height={canvas_size} edgeList={this.state.map}/>
+                <EdgeList onChange={this.updateEdgeList} maxSize={this.state.gridSize}/>
             </div>
 
         );

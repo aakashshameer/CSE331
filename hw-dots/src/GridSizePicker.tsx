@@ -26,7 +26,7 @@ class GridSizePicker extends Component<GridSizePickerProps, GridSizePickerState>
 
     constructor(props: GridSizePickerProps) {
         super(props);
-        this.state = {value : ""};
+        this.state = {value : "4"};
     }
 
     onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

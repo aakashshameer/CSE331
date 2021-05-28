@@ -15,6 +15,7 @@ interface GridProps {
     size: number;    // size of the grid to display
     width: number;   // width of the canvas on which to draw
     height: number;  // height of the canvas on which to draw
+    edgeList : Map<number, string[]>;
 }
 
 interface GridState {
@@ -86,6 +87,29 @@ class Grid extends Component<GridProps, GridState> {
         for (let coordinate of coordinates) {
             this.drawCircle(ctx, coordinate);
         }
+
+        const map : Map<number, string[]> = this.props.edgeList;
+        for(var i = 0; i < map.size; i++){
+                var entries : string[] = map.get(i)!;
+                let x1y1 = entries[0];
+                let x1 :number = parseInt(x1y1.split(",")[0]);
+
+                let y1 : number = parseInt(x1y1.split(",")[1]);
+
+                let x2y2 = entries[1];
+
+                let x2 : number = parseInt(x2y2.split(",")[0]);
+
+                let y2 : number = parseInt(x2y2.split(",")[1]);
+                let color : string = entries[2];
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                var n = this.props.width/ (this.props.size + 1);
+                ctx.moveTo(x1 * n + n, y1 * n + n);
+                ctx.lineTo(x2 * n + n, y2 * n + n );
+                ctx.stroke();
+        }
     };
 
     /**
@@ -104,12 +128,7 @@ class Grid extends Component<GridProps, GridState> {
             }
         }
         return arr;
-//         return [
-//             [100, 100], [100, 200], [100, 300], [100, 400],
-//             [200, 100], [200, 200], [200, 300], [200, 400],
-//             [300, 100], [300, 200], [300, 300], [300, 400],
-//             [400, 100], [400, 200], [400, 300], [400, 400]
-//         ];
+
     };
 
     drawCircle = (ctx: CanvasRenderingContext2D, coordinate: [number, number]) => {

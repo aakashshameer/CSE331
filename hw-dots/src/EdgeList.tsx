@@ -14,6 +14,7 @@ import React, {Component} from 'react';
 interface EdgeListProps {
     onChange(edges: any): void;  // called when a new edge list is ready
                                  // once you decide how you want to communicate the edges to the App, you shoul// change the type of edges so it isn't `any`
+    maxSize : number;
 }
 
 interface EdgeListState {
@@ -59,6 +60,14 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
                     alert += "\nLine " + (i + 1) + ": Coordinates contain non-integer value(s).";
                 }
 
+                if(parseInt(entry0[0]) >= this.props.maxSize || parseInt(entry0[1]) >= this.props.maxSize ||
+                   parseInt(entry1[0]) >= this.props.maxSize || parseInt(entry1[1]) >= this.props.maxSize){
+                    var max = Math.max(parseInt(entry0[0]), parseInt(entry0[1]), parseInt(entry1[0] ), parseInt(entry1[1]));
+                    error = true;
+                    alert = "We cannot draw the edges because the grid size is too small. The grid must be at least size " + (max + 1) + ".";
+
+                }
+
             }
 
             map.set(i, entries);
@@ -68,6 +77,11 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
             window.alert(alert);
         }
         this.setState({map : map})
+        this.props.onChange(this.state.map);
+    }
+
+    clear = (event: any) => {
+        this.setState({map : new Map ()});
         this.props.onChange(this.state.map);
     }
 
@@ -82,7 +96,7 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
                     value={this.state.value}
                 /> <br/>
                 <button onClick={(this.separateText)}>Draw</button>
-                <button onClick={() => {console.log('Clear onClick was called');}}>Clear</button>
+                <button onClick={(this.clear) }>Clear</button>
             </div>
         );
     }
