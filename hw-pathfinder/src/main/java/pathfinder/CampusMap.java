@@ -116,9 +116,9 @@ public class CampusMap<T> implements ModelAPI<T> {
      */
     @Override
     public Path<Point> findShortestPath(String startShortName, String endShortName) throws IllegalArgumentException{
-        if (startShortName == null || endShortName == null) {
-            throw new IllegalArgumentException("Invalid Buildings");
-        }
+//        if (startShortName == null || endShortName == null) {
+//            throw new IllegalArgumentException("Invalid Buildings");
+//        }
 
         Path<Point> path = new Path<Point>(new Point(1, 1));
         DirectedGraph<Point, Double> graph = new DirectedGraph<>();
@@ -136,9 +136,9 @@ public class CampusMap<T> implements ModelAPI<T> {
             }
         }
 
-        if (start.getX() < 0 || end.getX() < 0) {
-            throw new IllegalArgumentException("Invalid Buildings");
-        }
+//        if (start.getX() < 0 || end.getX() < 0) {
+//            throw new IllegalArgumentException("Invalid Buildings");
+//        }
 
         for (CampusPath campusPath : campusPaths) {
             Point n1 = new Point(campusPath.getX1(), campusPath.getY1());

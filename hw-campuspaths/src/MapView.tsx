@@ -37,10 +37,13 @@ class MapView extends Component<{}, MapViewState> {
 
     componentDidMount() {
         // Might want to do something here?
+        this.fetchAndSaveImage();
+        this.drawBackgroundImage();
     }
 
     componentDidUpdate() {
         // Might want something here too...
+        this.drawBackgroundImage();
     }
 
     fetchAndSaveImage() {

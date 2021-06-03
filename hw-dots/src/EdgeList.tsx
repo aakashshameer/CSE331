@@ -68,6 +68,11 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
 
                 }
 
+                // if(entries.toString() != ""){
+                //     alert = "Missing a line or an additional space on line" + (i + 1);
+                //     break;
+                // }
+
             }
 
             map.set(i, entries);
